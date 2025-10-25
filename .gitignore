@@ -47,8 +47,7 @@ lerna-debug.log*
 *.sublime-project
 
 # Claude Code settings (local only)
-.claude/settings.local.json
-.claude/*.local.*
+.claude/
 
 # OS files
 # MacOS
