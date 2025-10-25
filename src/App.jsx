@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
+import { Register } from "./componets/auth/Register.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -85,12 +86,12 @@ function App() {
           </form>
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">
-            Not a member?{" "}
+            No te has registrado aun?{"Register"}
             <a
-              href="#"
+              href="#Register"
               className="font-semibold text-indigo-600 hover:text-indigo-500"
             >
-              Start a 14 day free trial
+              Registrarse
             </a>
           </p>
         </div>
