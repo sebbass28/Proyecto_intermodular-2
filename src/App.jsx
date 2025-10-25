@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
-import { Register } from "./components/auth/Register.jsx";
+import Register from "./components/auth/Register.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
