@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
+=======
+import Register from "./components/auth/Register.jsx";
+>>>>>>> 78d1100 (correcion imports)
 
 function App() {
   const [count, setCount] = useState(0);
