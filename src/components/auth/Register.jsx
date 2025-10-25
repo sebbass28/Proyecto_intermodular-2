@@ -17,13 +17,13 @@ function Register() {
   useEffect(() => {}, []);
 
   return (
-    <div classNameName="flex items-center justify-center p-12">
-      <div classNameName="mx-auto w-full max-w-[550px] bg-white">
+    <div className="flex items-center justify-center p-12">
+      <div className="mx-auto w-full max-w-[550px] bg-white">
         <form>
-          <div classNameName="mb-5">
+          <div className="mb-5">
             <label
               htmlFor="name"
-              classNameName="mb-3 block text-base font-medium text-[#07074D]"
+              className="mb-3 block text-base font-medium text-[#07074D]"
             >
               Nombre Completo
             </label>
@@ -32,10 +32,10 @@ function Register() {
               name="name"
               id="name"
               placeholder="Full Name"
-              classNameName="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+              className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
             />
           </div>
-          <div classNameName="mb-5">
+          <div className="mb-5">
             <label
               htmlFor="phone"
               className="mb-3 block text-base font-medium text-[#07074D]"
