@@ -13,6 +13,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
-    <App />
   </React.StrictMode>
 );
