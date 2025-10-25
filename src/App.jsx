@@ -86,12 +86,12 @@ function App() {
           </form>
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">
-            No te has registrado aun?{" "}
+            ¿No tienes cuenta?{" "}
             <Link
               to="/register"
               className="font-semibold text-indigo-600 hover:text-indigo-500"
             >
-              Registrarse
+              Regístrarse aquí
             </Link>
           </p>
         </div>
