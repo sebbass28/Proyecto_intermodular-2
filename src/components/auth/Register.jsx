@@ -22,7 +22,7 @@ function Register() {
         <form>
           <div classNameName="mb-5">
             <label
-              for="name"
+              htmlFor="name"
               classNameName="mb-3 block text-base font-medium text-[#07074D]"
             >
               Nombre Completo
@@ -37,7 +37,7 @@ function Register() {
           </div>
           <div classNameName="mb-5">
             <label
-              for="phone"
+              htmlFor="phone"
               className="mb-3 block text-base font-medium text-[#07074D]"
             >
               Telefono
@@ -52,7 +52,7 @@ function Register() {
           </div>
           <div className="mb-5">
             <label
-              for="email"
+              htmlFor="email"
               className="mb-3 block text-base font-medium text-[#07074D]"
             >
               Correo
@@ -69,7 +69,7 @@ function Register() {
             <div className="w-full px-3 sm:w-1/2">
               <div className="mb-5">
                 <label
-                  for="date"
+                  htmlFor="date"
                   className="mb-3 block text-base font-medium text-[#07074D]"
                 >
                   Fecha
@@ -137,7 +137,7 @@ function Register() {
           </div>
 
           <div>
-            <button className="hover:shadow-form w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
+            <button className="hover:shadow-htmlForm w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
               Registrarse
             </button>
           </div>
