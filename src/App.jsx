@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
-<<<<<<< HEAD
 import { Link } from "react-router-dom";
-=======
-import Register from "./components/auth/Register.jsx";
->>>>>>> 78d1100 (correcion imports)
 
 function App() {
   const [count, setCount] = useState(0);
@@ -93,13 +89,13 @@ function App() {
           </form>
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">
-            ¿No tienes cuenta?{" "}
-            <Link
-              to="/register"
-              className="font-semibold text-gray-800 hover:text-emerald-500"
+            No te has registrado aun?
+            <a
+              href={Register}
+              className="font-semibold text-indigo-600 hover:text-indigo-500"
             >
-              Regístrarse aquí
-            </Link>
+              Registrarse
+            </a>
           </p>
         </div>
       </div>
