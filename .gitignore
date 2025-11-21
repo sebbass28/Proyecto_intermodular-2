@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 # Dependencies
 node_modules/
 .pnp
@@ -15,10 +17,41 @@ out/
 # Vite
 .vite/
 *.local
+=======
+# Node modules
+=======
+# Dependencies
+>>>>>>> 4d652e8 (Upload Structure app)
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+*.lcov
+
+# Production builds
+dist/
+build/
+out/
+
+<<<<<<< HEAD
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+>>>>>>> d294b19 (Agregar .gitignore y limpiar node_modules)
+=======
+# Vite
+.vite/
+*.local
+>>>>>>> 4d652e8 (Upload Structure app)
 
 # Environment variables
 .env
 .env.local
+<<<<<<< HEAD
+<<<<<<< HEAD
 .env.development.local
 .env.test.local
 .env.production.local
@@ -77,10 +110,78 @@ $RECYCLE.BIN/
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+=======
+=======
+.env.development.local
+.env.test.local
+.env.production.local
+>>>>>>> 4d652e8 (Upload Structure app)
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# IDEs and editors
+.vscode/
+.vscode-test/
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.sublime-workspace
+*.sublime-project
+
+# Claude Code settings (local only)
+.claude/settings.local.json
+.claude/*.local.*
+
+# OS files
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# Optional npm/yarn cache directory
+.npm/
+<<<<<<< HEAD
+>>>>>>> d294b19 (Agregar .gitignore y limpiar node_modules)
+=======
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+>>>>>>> 4d652e8 (Upload Structure app)
 
 # Temporary files
 *.tmp
 *.temp
+<<<<<<< HEAD
+<<<<<<< HEAD
 *.swp
 *.swo
 *~
@@ -114,3 +215,45 @@ $RECYCLE.BIN/
 
 # Turbo
 .turbo
+=======
+=======
+*.swp
+*.swo
+*~
+>>>>>>> 4d652e8 (Upload Structure app)
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+<<<<<<< HEAD
+# Misc
+*.log
+>>>>>>> d294b19 (Agregar .gitignore y limpiar node_modules)
+=======
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Firebase cache
+.firebase/
+
+# Vercel
+.vercel
+
+# Netlify
+.netlify
+
+# Turbo
+.turbo
+>>>>>>> 4d652e8 (Upload Structure app)
