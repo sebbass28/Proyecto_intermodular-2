@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { Link } from "react-router-dom";
 // import { useAuthStore } from "../../store/authStore"; // <-- Eliminado, se simulará
 
 // import countryList from "react-select-country-list"; // <-- Eliminado
@@ -224,7 +224,6 @@ function Register() {
         </div>
 
         {/* PASO 1 */}
-
         {count === 1 && (
           <form onSubmit={siguiente}>
             {/* ... (Campos de Nombre, Email, Contraseña sin cambios) ... */}
@@ -325,6 +324,13 @@ function Register() {
             >
               Siguiente
             </button>
+
+            <Link
+              to="/"
+              className="mt-4 flex w-full justify-center text-sm/6 font-semibold text-gray-800 hover:text-emerald-500"
+            >
+              Volver al login
+            </Link>
           </form>
         )}
 
