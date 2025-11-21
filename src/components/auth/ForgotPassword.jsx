@@ -48,6 +48,10 @@ function ForgotPassword() {
               >
                 Reset Password
               </button>
+
+              <Link to="/" className="mt-4 flex w-full justify-center text-sm/6 font-semibold text-gray-800 hover:text-emerald-500">
+                Volver al login
+              </Link>
             </div>
           </form>
         </div>
