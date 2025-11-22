@@ -6,7 +6,8 @@ import Register from "./components/auth/Register.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { user, token, loading, error, register, login, logout, tryAutoLogin } =
     useAuthStore();
 
@@ -14,6 +15,15 @@ function App() {
     tryAutoLogin();
   }, []);
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await login(email, password);
+      console.log("Login exitoso!");
+    } catch (err) {
+      console.error("Error al hacer login:", err);
+    }
+  };
   return (
     <div className="flex items-center justify-center p-6 md:p-12 bg-gray-100 min-h-screen">
       <div className="mx-auto w-full max-w-[550px] bg-white p-8 rounded-xl shadow-lg">
@@ -31,8 +41,14 @@ function App() {
           Tu flujo financiero en control
         </p>
 
+        {error && (
+          <div className="mt-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
+            {typeof error === 'string' ? error : JSON.stringify(error)}
+          </div>
+        )}
+
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <form onSubmit={handleLogin} className="space-y-6">
             <div>
               <label
                 htmlFor="email"
@@ -47,6 +63,8 @@ function App() {
                   name="email"
                   type="email"
                   required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
                   placeholder="ejemplo@email.com"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-600 sm:text-sm/6"
@@ -78,6 +96,8 @@ function App() {
                   id="password"
                   name="password"
                   type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="********"
                   required
                   autoComplete="current-password"
@@ -89,9 +109,10 @@ function App() {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                disabled={loading}
+                className="flex w-full justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Sign in
+                {loading ? "Ingresando..." : "Sign in"}
               </button>
             </div>
           </form>
