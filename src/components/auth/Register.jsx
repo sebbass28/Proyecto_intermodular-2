@@ -114,7 +114,7 @@ function Register() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = {};
@@ -158,19 +158,17 @@ function Register() {
     }
 
     try {
-    await register(form.email, form.password, form.name);
-    
-    // Si el registro es exitoso, podrías redirigir
-    console.log("Usuario registrado exitosamente!");
-    // Opcional: redirigir a login o dashboard
-    // navigate("/");
-  } catch (err) {
-    console.error("Error al registrar:", err);
-    // El error ya está manejado por el authStore
-  }
-};
+      await register(form.email, form.password, form.name);
 
-
+      // Si el registro es exitoso, podrías redirigir
+      console.log("Usuario registrado exitosamente!");
+      // Opcional: redirigir a login o dashboard
+      // navigate("/");
+    } catch (err) {
+      console.error("Error al registrar:", err);
+      // El error ya está manejado por el authStore
+    }
+  };
 
   return (
     <div className="flex items-center justify-center p-6 md:p-12 bg-gray-100 min-h-screen">
@@ -200,7 +198,7 @@ function Register() {
         {/* Mensajes de error */}
         {error && (
           <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
-            {typeof error === 'string' ? error : JSON.stringify(error)}
+            {typeof error === "string" ? error : JSON.stringify(error)}
           </div>
         )}
 
@@ -456,9 +454,9 @@ function Register() {
               </button>
 
               <button
-                  type="submit"
-                  disabled={loading}
-                  className="flex w-full justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                type="submit"
+                disabled={loading}
+                className="flex w-full justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? "Registrando..." : "Registrarse"}
               </button>
