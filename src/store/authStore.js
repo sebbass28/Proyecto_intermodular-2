@@ -39,9 +39,10 @@ export const useAuthStore = create((set) => ({
       localStorage.setItem("auth_user", JSON.stringify(user));
     } catch (err) {
       set({
-        error: err.response?.data?.errors || err.message,
+        error: err.response?.data?.error || err.response?.data?.errors || err.message,
         loading: false,
       });
+      throw err;
     }
   },
 
