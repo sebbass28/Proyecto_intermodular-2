@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
 
 function Register() {
+  const navigate = useNavigate();
   const [count, setCount] = useState(1);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const [errors, setErrors] = useState({});
 
@@ -159,20 +161,18 @@ function Register() {
 
     try {
   await register(form.email, form.password, form.name);
-  
-  // Verificar si hubo error
-  const currentError = useAuthStore.getState().error;
-  if (currentError) {
-    console.error("Error al registrar:", currentError);
-    return;
-  }
-  
-  // Si el registro es exitoso, podrías redirigir
+
+  // Si el registro es exitoso, mostrar mensaje y redirigir al login
   console.log("Usuario registrado exitosamente!");
-  // Opcional: redirigir a login o dashboard
-  // navigate("/");
+  setSuccessMessage("¡Registro exitoso! Redirigiendo al login...");
+
+  // Esperar un momento para que el usuario vea el mensaje de éxito
+  setTimeout(() => {
+    navigate("/");
+  }, 2000);
 } catch (err) {
   console.error("Error al registrar:", err);
+  // El error ya se muestra en el componente vía useAuthStore
 }
   };
 
@@ -205,6 +205,13 @@ function Register() {
         {error && (
           <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
             {typeof error === "string" ? error : JSON.stringify(error)}
+          </div>
+        )}
+
+        {/* Mensaje de éxito */}
+        {successMessage && (
+          <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-md text-sm">
+            {successMessage}
           </div>
         )}
 
