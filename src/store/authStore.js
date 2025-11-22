@@ -21,6 +21,7 @@ export const useAuthStore = create((set) => ({
         error: err.response?.data?.errors || err.message,
         loading: false,
       });
+      throw err;
     }
   },
 
@@ -57,4 +58,3 @@ export const useAuthStore = create((set) => ({
     }
   },
 }));
-
