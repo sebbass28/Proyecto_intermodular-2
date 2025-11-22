@@ -28,7 +28,7 @@ function ForgotPassword() {
   };
 
   return (
-    <div className="flex items-center justify-center p-6 md:p-12 bg-gray-100 min-h-screen">
+    <div className="flex items-center justify-center p-6 md:p-12 bg-gradient-to-r from-green-50 to-emerald-100 min-h-screen">
       <div className="mx-auto w-full max-w-[550px] bg-white p-8 rounded-xl shadow-lg">
         <img
           alt="FinanceFlow"
