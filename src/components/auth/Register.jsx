@@ -1,20 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import { useAuthStore } from "../../store/authStore"; // <-- Eliminado, se simulará
-
-// import countryList from "react-select-country-list"; // <-- Eliminado
-
-// import Select from "react-select"; // <-- Eliminado
-
-// 1. SIMULACIÓN (MOCK) DE AUTHSTORE
-
-// Esto reemplaza la importación faltante para que el código sea ejecutable.
-
-const useAuthStore = {
-  setState: (newState) => {
-    console.log("Estado de authStore actualizado (simulación):", newState);
-  },
-};
+import { useAuthStore } from "../../store/authStore";
 
 function Register() {
   const [count, setCount] = useState(1);
@@ -40,6 +26,8 @@ function Register() {
 
     address: "",
   });
+
+  const { register, loading, error } = useAuthStore();
 
   // 2. NUEVO ESTADO para la lista de países y la carga
 
@@ -169,34 +157,20 @@ function Register() {
       return;
     }
 
-    // Usamos la simulación de useAuthStore
+    try {
+    await register(form.email, form.password, form.name);
+    
+    // Si el registro es exitoso, podrías redirigir
+    console.log("Usuario registrado exitosamente!");
+    // Opcional: redirigir a login o dashboard
+    // navigate("/");
+  } catch (err) {
+    console.error("Error al registrar:", err);
+    // El error ya está manejado por el authStore
+  }
+};
 
-    useAuthStore.setState({
-      userName: form.name,
 
-      email: form.email,
-
-      password: form.password,
-
-      passwordConfirm: form.passwordConfirm,
-
-      creditCard: form.creditCard,
-
-      location: form.location,
-
-      numberPhone: form.numberPhone,
-
-      birthDay: form.birthDay,
-
-      address: form.address,
-    });
-
-    console.log("Usuario registrado:", form);
-
-    // Aquí puedes redirigir o mostrar un mensaje de éxito
-  };
-
-  // --- Eliminados useMemo, useState(country), handleCountryChange y customSelectStyles ---
 
   return (
     <div className="flex items-center justify-center p-6 md:p-12 bg-gray-100 min-h-screen">
@@ -222,6 +196,15 @@ function Register() {
             ></div>
           </div>
         </div>
+
+        </div>
+
+        {/* Mensajes de error */}
+        {error && (
+          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
+            {typeof error === 'string' ? error : JSON.stringify(error)}
+          </div>
+        )}
 
         {/* PASO 1 */}
         {count === 1 && (
@@ -475,10 +458,11 @@ function Register() {
               </button>
 
               <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                  type="submit"
+                  disabled={loading}
+                  className="flex w-full justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Registrarse
+                {loading ? "Registrando..." : "Registrarse"}
               </button>
             </div>
           </form>
