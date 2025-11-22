@@ -158,16 +158,22 @@ function Register() {
     }
 
     try {
-      await register(form.email, form.password, form.name);
-
-      // Si el registro es exitoso, podrías redirigir
-      console.log("Usuario registrado exitosamente!");
-      // Opcional: redirigir a login o dashboard
-      // navigate("/");
-    } catch (err) {
-      console.error("Error al registrar:", err);
-      // El error ya está manejado por el authStore
-    }
+  await register(form.email, form.password, form.name);
+  
+  // Verificar si hubo error
+  const currentError = useAuthStore.getState().error;
+  if (currentError) {
+    console.error("Error al registrar:", currentError);
+    return;
+  }
+  
+  // Si el registro es exitoso, podrías redirigir
+  console.log("Usuario registrado exitosamente!");
+  // Opcional: redirigir a login o dashboard
+  // navigate("/");
+} catch (err) {
+  console.error("Error al registrar:", err);
+}
   };
 
   return (
