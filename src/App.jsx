@@ -8,7 +8,7 @@ function App() {
   const [count, setCount] = useState(0);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { user, token, loading, error, register, login, logout, tryAutoLogin } =
+  const { user, token, loading, error, login, tryAutoLogin } =
     useAuthStore();
 
   useEffect(() => {
@@ -20,54 +20,13 @@ function App() {
     try {
       await login(email, password);
       console.log("Login exitoso!");
-      // Usuario logueado correctamente, token guardado en localStorage
     } catch (err) {
       console.error("Error al hacer login:", err);
     }
   };
 
-  // Si el usuario está logueado, mostrar dashboard simple
-  if (user && token) {
-    return (
-      <div className="flex items-center justify-center p-6 md:p-12 bg-gray-100 min-h-screen">
-        <div className="mx-auto w-full max-w-[550px] bg-white p-8 rounded-xl shadow-lg">
-          <img
-            alt="FinanceFlow"
-            src="/finance-flow-logo-gradient.svg"
-            className="mx-auto h-28 w-auto hover:drop-shadow-[0_0_10px_theme(colors.emerald.400)] transition-all duration-300;"
-          />
-
-          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-            ¡Bienvenido!
-          </h2>
-
-          <p className="mt-2 text-center text-sm/6 text-gray-500">
-            Has iniciado sesión correctamente
-          </p>
-
-          <div className="mt-6 p-4 bg-emerald-50 rounded-md">
-            <p className="text-sm text-gray-700">
-              <strong>Usuario:</strong> {user.name || user.email}
-            </p>
-            <p className="text-sm text-gray-700 mt-1">
-              <strong>Email:</strong> {user.email}
-            </p>
-          </div>
-
-          <button
-            onClick={logout}
-            className="mt-6 flex w-full justify-center rounded-md bg-gray-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
-          >
-            Cerrar sesión
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  // Si no está logueado, mostrar formulario de login
   return (
-    <div className="flex items-center justify-center p-6 md:p-12 bg-gray-100 min-h-screen">
+    <div className="flex items-center justify-center p-6 md:p-12 bg-gradient-to-r from-green-50 to-emerald-100 min-h-screen">
       <div className="mx-auto w-full max-w-[550px] bg-white p-8 rounded-xl shadow-lg">
         <img
           alt="FinanceFlow"
