@@ -37,7 +37,7 @@ function ForgotPassword() {
                 className="block text-sm font-medium text-gray-900"
               >
                 Correo electrónico
-              </label>
+              </label> 
 
               <div className="mt-2">
                 <input
