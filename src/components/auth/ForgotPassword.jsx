@@ -70,7 +70,7 @@ function ForgotPassword() {
         </div>
       </div>
     </div>
-  );
+  ); 
 }
 
 export default ForgotPassword;
