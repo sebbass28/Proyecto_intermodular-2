@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
@@ -7,6 +8,16 @@ function Register() {
   const [count, setCount] = useState(1);
   const [successMessage, setSuccessMessage] = useState("");
 
+=======
+import { useState, useEffect } from "react";
+import { useAuthStore } from "../../store/authStore";
+import { Link, useNavigate } from "react-router-dom";
+
+function Register() {
+  const navigate = useNavigate();
+  const { register, loading, error, user } = useAuthStore();
+  const [count, setCount] = useState(1);
+>>>>>>> Stashed changes
   const [errors, setErrors] = useState({});
 
   const [form, setForm] = useState({
@@ -14,6 +25,7 @@ function Register() {
     email: "",
     password: "",
     passwordConfirm: "",
+<<<<<<< Updated upstream
     birthDay: "",
     location: "",
     numberPhone: "",
@@ -53,38 +65,75 @@ function Register() {
     "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela",
     "Vietnam", "Yemen", "Zambia", "Zimbabwe"
   ];
+=======
+    creditCard: "",
+    location: "",
+    numberPhone: "",
+    birthDay: "",
+    address: "",
+  });
+
+  const [countryOptions, setCountryOptions] = useState([]);
+  const [isLoadingCountries, setIsLoadingCountries] = useState(true);
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
+
+  useEffect(() => {
+    async function fetchCountries() {
+      try {
+        const response = await fetch("https://restcountries.com/v3.1/all");
+        if (!response.ok) throw new Error("No se pudieron cargar los países");
+        const data = await response.json();
+        const countryNames = data.map((country) => country.name.common);
+        countryNames.sort((a, b) =>
+          a.localeCompare(b, "es", { sensitivity: "base" })
+        );
+        setCountryOptions(countryNames);
+      } catch (error) {
+        console.error("Error al cargar países:", error);
+      } finally {
+        setIsLoadingCountries(false);
+      }
+    }
+    fetchCountries();
+  }, []);
+>>>>>>> Stashed changes
 
   const handleChange = (e) => {
     setForm({
       ...form,
-
       [e.target.name]: e.target.value,
     });
 
     if (errors[e.target.name]) {
       setErrors({
         ...errors,
-
         [e.target.name]: null,
       });
     }
 
+<<<<<<< Updated upstream
+=======
+    if (e.target.name === "location" && errors.location) {
+      setErrors({ ...errors, location: null });
+    }
+>>>>>>> Stashed changes
   };
 
   const siguiente = (e) => {
     e.preventDefault();
-
     const newErrors = {};
 
     if (!form.name) newErrors.name = "El nombre es obligatorio.";
-
     if (!form.email) newErrors.email = "El email es obligatorio.";
-
     if (!form.password) newErrors.password = "La contraseña es obligatoria.";
-
     if (form.password.length < 6)
       newErrors.password = "Debe tener al menos 6 caracteres.";
-
     if (form.password !== form.passwordConfirm) {
       newErrors.passwordConfirm = "Las contraseñas no coinciden.";
     }
@@ -98,20 +147,17 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const newErrors = {};
 
-    // Validar campos del paso 1 (por si acaso)
-
+    // Validar campos del paso 1
     if (!form.name) newErrors.name = "El nombre es obligatorio.";
-
     if (!form.email) newErrors.email = "El email es obligatorio.";
-
     if (form.password !== form.passwordConfirm) {
       newErrors.passwordConfirm = "Las contraseñas no coinciden";
     }
 
     // Validar campos del paso 2
+<<<<<<< Updated upstream
 
     if (!form.birthDay)
       newErrors.birthDay = "La fecha de nacimiento es obligatoria.";
@@ -129,21 +175,24 @@ function Register() {
 
     if (!form.acceptTerms)
       newErrors.acceptTerms = "Debes aceptar los términos y condiciones.";
+=======
+    if (!form.creditCard) newErrors.creditCard = "La tarjeta es obligatoria.";
+    if (!form.location) newErrors.location = "El país es obligatorio.";
+    if (!form.numberPhone) newErrors.numberPhone = "El teléfono es obligatorio.";
+    if (!form.birthDay) newErrors.birthDay = "La fecha de nacimiento es obligatoria.";
+    if (!form.address) newErrors.address = "La dirección es obligatoria.";
+>>>>>>> Stashed changes
 
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) {
-      console.log("Errores en el formulario:", newErrors);
-
-      // Si hay errores en el paso 1, volvemos al paso 1
-
       if (newErrors.name || newErrors.email || newErrors.passwordConfirm) {
         setCount(1);
       }
-
       return;
     }
 
+<<<<<<< Updated upstream
     try {
       await register(form.email, form.password, form.name);
 
@@ -159,11 +208,24 @@ function Register() {
       console.error("Error al registrar:", err);
       // El error ya se muestra en el componente vía useAuthStore
     }
+=======
+    await register({
+      name: form.name,
+      email: form.email,
+      password: form.password,
+      creditCard: form.creditCard,
+      location: form.location,
+      numberPhone: form.numberPhone,
+      birthDay: form.birthDay,
+      address: form.address,
+    });
+>>>>>>> Stashed changes
   };
 
   return (
     <div className="flex items-center justify-center p-6 md:p-12 bg-gradient-to-r from-green-50 to-emerald-100 min-h-screen">
       <div className="mx-auto w-full max-w-[550px] bg-white p-8 rounded-xl shadow-lg">
+<<<<<<< Updated upstream
         <img
           alt="FinanceFlow"
           src="/finance-flow-logo-gradient.svg"
@@ -172,18 +234,18 @@ function Register() {
 
         {/* Indicador de Paso */}
 
+=======
+>>>>>>> Stashed changes
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-center text-[#07074D]">
             Registro - Paso {count} de 2
           </h2>
-
           <div className="mt-2 flex">
             <div
               className={`w-1/2 h-2 rounded-l-full ${
                 count === 1 ? "bg-emerald-600" : "bg-emerald-600"
               }`}
             ></div>
-
             <div
               className={`w-1/2 h-2 rounded-r-full ${
                 count === 2 ? "bg-emerald-600" : "bg-gray-200"
@@ -192,10 +254,16 @@ function Register() {
           </div>
         </div>
 
+<<<<<<< Updated upstream
         {/* Mensajes de error */}
         {error && (
           <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
             {typeof error === "string" ? error : JSON.stringify(error)}
+=======
+        {error && (
+          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
+            {typeof error === "string" ? error : "Error al registrarse"}
+>>>>>>> Stashed changes
           </div>
         )}
 
@@ -209,13 +277,10 @@ function Register() {
         {/* PASO 1 */}
         {count === 1 && (
           <form onSubmit={siguiente}>
-            {/* ... (Campos de Nombre, Email, Contraseña sin cambios) ... */}
-
             <div className="mb-5">
               <label className="mb-3 block text-base font-medium text-[#07074D]">
                 Nombre Completo *
               </label>
-
               <input
                 type="text"
                 name="name"
@@ -226,7 +291,6 @@ function Register() {
                   errors.name ? "outline-red-500" : "outline-gray-300"
                 }`}
               />
-
               {errors.name && (
                 <p className="text-red-500 text-xs mt-1">{errors.name}</p>
               )}
@@ -236,7 +300,6 @@ function Register() {
               <label className="mb-3 block text-base font-medium text-[#07074D]">
                 Email *
               </label>
-
               <input
                 type="email"
                 name="email"
@@ -247,7 +310,6 @@ function Register() {
                   errors.email ? "outline-red-500" : "outline-gray-300"
                 }`}
               />
-
               {errors.email && (
                 <p className="text-red-500 text-xs mt-1">{errors.email}</p>
               )}
@@ -258,7 +320,6 @@ function Register() {
                 <label className="mb-3 block text-base font-medium text-[#07074D]">
                   Contraseña *
                 </label>
-
                 <input
                   type="password"
                   name="password"
@@ -269,7 +330,6 @@ function Register() {
                     errors.password ? "outline-red-500" : "outline-gray-300"
                   }`}
                 />
-
                 {errors.password && (
                   <p className="text-red-500 text-xs mt-1">{errors.password}</p>
                 )}
@@ -279,7 +339,6 @@ function Register() {
                 <label className="mb-3 block text-base font-medium text-[#07074D]">
                   Confirmar *
                 </label>
-
                 <input
                   type="password"
                   name="passwordConfirm"
@@ -292,7 +351,6 @@ function Register() {
                       : "outline-gray-300"
                   }`}
                 />
-
                 {errors.passwordConfirm && (
                   <p className="text-red-500 text-xs mt-1">
                     {errors.passwordConfirm}
@@ -307,6 +365,7 @@ function Register() {
             >
               Siguiente
             </button>
+<<<<<<< Updated upstream
 
             <Link
               to="/"
@@ -314,10 +373,17 @@ function Register() {
             >
               ¿Tienes cuenta? Volver al login
             </Link>
+=======
+            
+            <p className="mt-4 text-center text-sm text-gray-500">
+              ¿Ya tienes cuenta?{" "}
+              <Link to="/" className="font-semibold text-emerald-600 hover:text-emerald-500">
+                Inicia sesión
+              </Link>
+            </p>
+>>>>>>> Stashed changes
           </form>
         )}
-
-        {/* PASO 2 */}
 
         {count === 2 && (
           <form onSubmit={handleSubmit}>
@@ -325,7 +391,6 @@ function Register() {
               <label className="mb-3 block text-base font-medium text-[#07074D]">
                 Fecha de Nacimiento *
               </label>
-
               <input
                 type="date"
                 name="birthDay"
@@ -335,9 +400,14 @@ function Register() {
                   errors.birthDay ? "outline-red-500" : "outline-gray-300"
                 }`}
               />
+<<<<<<< Updated upstream
 
               {errors.birthDay && (
                 <p className="text-red-500 text-xs mt-1">{errors.birthDay}</p>
+=======
+              {errors.creditCard && (
+                <p className="text-red-500 text-xs mt-1">{errors.creditCard}</p>
+>>>>>>> Stashed changes
               )}
             </div>
 
@@ -345,6 +415,7 @@ function Register() {
               <label className="mb-3 block text-base font-medium text-[#07074D]">
                 País *
               </label>
+<<<<<<< Updated upstream
 
               <select
                 name="location"
@@ -362,18 +433,38 @@ function Register() {
                 ))}
               </select>
 
+=======
+              <input
+                type="text"
+                name="location"
+                value={form.location}
+                onChange={handleChange}
+                list="lista-paises"
+                placeholder={
+                  isLoadingCountries
+                    ? "Cargando países..."
+                    : "Escribe tu país..."
+                }
+                disabled={isLoadingCountries}
+                className={`block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-600 sm:text-sm/6 ${
+                  errors.location ? "outline-red-500" : "outline-gray-300"
+                }`}
+              />
+              <datalist id="lista-paises">
+                {countryOptions.map((pais) => (
+                  <option key={pais} value={pais} />
+                ))}
+              </datalist>
+>>>>>>> Stashed changes
               {errors.location && (
                 <p className="text-red-500 text-xs mt-1">{errors.location}</p>
               )}
             </div>
 
-            {/* ... (Resto de campos de Teléfono, Nacimiento, Dirección sin cambios) ... */}
-
             <div className="mb-5">
               <label className="mb-3 block text-base font-medium text-[#07074D]">
                 Número de telefono *
               </label>
-
               <input
                 type="tel"
                 name="numberPhone"
@@ -384,7 +475,6 @@ function Register() {
                   errors.numberPhone ? "outline-red-500" : "outline-gray-300"
                 }`}
               />
-
               {errors.numberPhone && (
                 <p className="text-red-500 text-xs mt-1">
                   {errors.numberPhone}
@@ -396,14 +486,22 @@ function Register() {
               <label className="mb-3 block text-base font-medium text-[#07074D]">
                 Moneda Preferida *
               </label>
+<<<<<<< Updated upstream
 
               <select
                 name="preferCoin"
                 value={form.preferCoin}
+=======
+              <input
+                type="date"
+                name="birthDay"
+                value={form.birthDay}
+>>>>>>> Stashed changes
                 onChange={handleChange}
                 className={`block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-600 sm:text-sm/6 ${
                   errors.preferCoin ? "outline-red-500" : "outline-gray-300"
                 }`}
+<<<<<<< Updated upstream
               >
                 <option value="">Selecciona una moneda</option>
                 <option value="USD">🇺🇸 Dólar Estadounidense (USD)</option>
@@ -430,6 +528,11 @@ function Register() {
 
               {errors.preferCoin && (
                 <p className="text-red-500 text-xs mt-1">{errors.preferCoin}</p>
+=======
+              />
+              {errors.birthDay && (
+                <p className="text-red-500 text-xs mt-1">{errors.birthDay}</p>
+>>>>>>> Stashed changes
               )}
             </div>
 
@@ -437,7 +540,6 @@ function Register() {
               <label className="mb-3 block text-base font-medium text-[#07074D]">
                 Ingreso Mensual *
               </label>
-
               <input
                 type="number"
                 name="mensualIngres"
@@ -448,6 +550,7 @@ function Register() {
                   errors.mensualIngres ? "outline-red-500" : "outline-gray-300"
                 }`}
               />
+<<<<<<< Updated upstream
               {/* Checkboxes */}
               <div className="space-y-3 pt-4">
                 <div className="flex items-start gap-3">
@@ -503,6 +606,10 @@ function Register() {
                 <p className="text-red-500 text-xs mt-1">
                   {errors.mensualIngres}
                 </p>
+=======
+              {errors.address && (
+                <p className="text-red-500 text-xs mt-1">{errors.address}</p>
+>>>>>>> Stashed changes
               )}
             </div>
 
@@ -511,18 +618,19 @@ function Register() {
                 type="button"
                 onClick={() => {
                   setCount(1);
-
-                  // No limpiamos errores, por si el usuario solo quería volver
                 }}
                 className="flex w-full justify-center rounded-md bg-gray-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
               >
                 Atrás
               </button>
-
               <button
                 type="submit"
                 disabled={loading}
+<<<<<<< Updated upstream
                 className="flex w-full justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed"
+=======
+                className="flex w-full justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 disabled:opacity-50"
+>>>>>>> Stashed changes
               >
                 {loading ? "Registrando..." : "Registrarse"}
               </button>

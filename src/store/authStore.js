@@ -8,10 +8,10 @@ export const useAuthStore = create((set) => ({
   error: null,
 
   // REGISTER
-  register: async (email, password, name) => {
+  register: async (userData) => {
     set({ loading: true, error: null });
     try {
-      const res = await api.post("/auth/register", { email, password, name });
+      const res = await api.post("/auth/register", userData);
       const { token, user } = res.data;
       set({ user, token, loading: false });
       localStorage.setItem("auth_token", token);
@@ -25,6 +25,22 @@ export const useAuthStore = create((set) => ({
         loading: false,
       });
       throw err;
+    }
+  },
+
+  // RESET PASSWORD
+  resetPassword: async (email) => {
+    set({ loading: true, error: null });
+    try {
+      await api.post("/auth/forgot-password", { email });
+      set({ loading: false });
+      return true; // Success
+    } catch (err) {
+      set({
+        error: err.response?.data?.errors || err.message,
+        loading: false,
+      });
+      return false;
     }
   },
 
