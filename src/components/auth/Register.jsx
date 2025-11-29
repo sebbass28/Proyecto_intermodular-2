@@ -1,14 +1,3 @@
-<<<<<<< Updated upstream
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuthStore } from "../../store/authStore";
-
-function Register() {
-  const navigate = useNavigate();
-  const [count, setCount] = useState(1);
-  const [successMessage, setSuccessMessage] = useState("");
-
-=======
 import { useState, useEffect } from "react";
 import { useAuthStore } from "../../store/authStore";
 import { Link, useNavigate } from "react-router-dom";
@@ -17,60 +6,23 @@ function Register() {
   const navigate = useNavigate();
   const { register, loading, error, user } = useAuthStore();
   const [count, setCount] = useState(1);
->>>>>>> Stashed changes
   const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState("");
 
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
     passwordConfirm: "",
-<<<<<<< Updated upstream
-    birthDay: "",
-    location: "",
-    numberPhone: "",
-    preferCoin: "",
-    mensualIngres: "",
-    receiveNotifications: false,
-    acceptTerms: false,
-  });
-
-  const { register, loading, error } = useAuthStore();
-
-  // Lista de países predefinida
-  const countryOptions = [
-    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Argentina", "Armenia", "Australia",
-    "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium",
-    "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei",
-    "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde",
-    "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica",
-    "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic",
-    "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia",
-    "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada",
-    "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India",
-    "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan",
-    "Kazakhstan", "Kenya", "Kiribati", "North Korea", "South Korea", "Kosovo", "Kuwait", "Kyrgyzstan",
-    "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
-    "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands",
-    "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro",
-    "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand",
-    "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama",
-    "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania",
-    "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines",
-    "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles",
-    "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa",
-    "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland",
-    "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago",
-    "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates",
-    "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela",
-    "Vietnam", "Yemen", "Zambia", "Zimbabwe"
-  ];
-=======
     creditCard: "",
     location: "",
     numberPhone: "",
     birthDay: "",
     address: "",
+    preferCoin: "",
+    mensualIngres: "",
+    receiveNotifications: false,
+    acceptTerms: false,
   });
 
   const [countryOptions, setCountryOptions] = useState([]);
@@ -102,12 +54,12 @@ function Register() {
     }
     fetchCountries();
   }, []);
->>>>>>> Stashed changes
 
   const handleChange = (e) => {
+    const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
     setForm({
       ...form,
-      [e.target.name]: e.target.value,
+      [e.target.name]: value,
     });
 
     if (errors[e.target.name]) {
@@ -117,12 +69,9 @@ function Register() {
       });
     }
 
-<<<<<<< Updated upstream
-=======
     if (e.target.name === "location" && errors.location) {
       setErrors({ ...errors, location: null });
     }
->>>>>>> Stashed changes
   };
 
   const siguiente = (e) => {
@@ -157,31 +106,14 @@ function Register() {
     }
 
     // Validar campos del paso 2
-<<<<<<< Updated upstream
-
-    if (!form.birthDay)
-      newErrors.birthDay = "La fecha de nacimiento es obligatoria.";
-
-    if (!form.location) newErrors.location = "El país es obligatorio.";
-
-    if (!form.numberPhone)
-      newErrors.numberPhone = "El teléfono es obligatorio.";
-
-    if (!form.preferCoin)
-      newErrors.preferCoin = "La moneda preferida es obligatoria.";
-
-    if (!form.mensualIngres)
-      newErrors.mensualIngres = "El ingreso mensual es obligatorio.";
-
-    if (!form.acceptTerms)
-      newErrors.acceptTerms = "Debes aceptar los términos y condiciones.";
-=======
     if (!form.creditCard) newErrors.creditCard = "La tarjeta es obligatoria.";
     if (!form.location) newErrors.location = "El país es obligatorio.";
     if (!form.numberPhone) newErrors.numberPhone = "El teléfono es obligatorio.";
     if (!form.birthDay) newErrors.birthDay = "La fecha de nacimiento es obligatoria.";
     if (!form.address) newErrors.address = "La dirección es obligatoria.";
->>>>>>> Stashed changes
+    if (!form.preferCoin) newErrors.preferCoin = "La moneda preferida es obligatoria.";
+    if (!form.mensualIngres) newErrors.mensualIngres = "El ingreso mensual es obligatorio.";
+    if (!form.acceptTerms) newErrors.acceptTerms = "Debes aceptar los términos y condiciones.";
 
     setErrors(newErrors);
 
@@ -192,50 +124,26 @@ function Register() {
       return;
     }
 
-<<<<<<< Updated upstream
     try {
-      await register(form.email, form.password, form.name);
-
-      // Si el registro es exitoso, mostrar mensaje y redirigir al login
-      console.log("Usuario registrado exitosamente!");
+      await register(form);
       setSuccessMessage("¡Registro exitoso! Redirigiendo al login...");
-
-      // Esperar un momento para que el usuario vea el mensaje de éxito
       setTimeout(() => {
         navigate("/");
       }, 2000);
     } catch (err) {
       console.error("Error al registrar:", err);
-      // El error ya se muestra en el componente vía useAuthStore
     }
-=======
-    await register({
-      name: form.name,
-      email: form.email,
-      password: form.password,
-      creditCard: form.creditCard,
-      location: form.location,
-      numberPhone: form.numberPhone,
-      birthDay: form.birthDay,
-      address: form.address,
-    });
->>>>>>> Stashed changes
   };
 
   return (
-    <div className="flex items-center justify-center p-6 md:p-12 bg-gradient-to-r from-green-50 to-emerald-100 min-h-screen">
+    <div className="flex items-center justify-center p-6 md:p-12 bg-gray-100 min-h-screen">
       <div className="mx-auto w-full max-w-[550px] bg-white p-8 rounded-xl shadow-lg">
-<<<<<<< Updated upstream
         <img
           alt="FinanceFlow"
           src="/finance-flow-logo-gradient.svg"
           className="mx-auto h-28 w-auto hover:drop-shadow-[0_0_10px_theme(colors.emerald.400)] transition-all duration-300;"
         />
-
-        {/* Indicador de Paso */}
-
-=======
->>>>>>> Stashed changes
+        
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-center text-[#07074D]">
             Registro - Paso {count} de 2
@@ -254,27 +162,18 @@ function Register() {
           </div>
         </div>
 
-<<<<<<< Updated upstream
-        {/* Mensajes de error */}
-        {error && (
-          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
-            {typeof error === "string" ? error : JSON.stringify(error)}
-=======
         {error && (
           <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
             {typeof error === "string" ? error : "Error al registrarse"}
->>>>>>> Stashed changes
           </div>
         )}
-
-        {/* Mensaje de éxito */}
+        
         {successMessage && (
           <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-md text-sm">
             {successMessage}
           </div>
         )}
 
-        {/* PASO 1 */}
         {count === 1 && (
           <form onSubmit={siguiente}>
             <div className="mb-5">
@@ -365,15 +264,6 @@ function Register() {
             >
               Siguiente
             </button>
-<<<<<<< Updated upstream
-
-            <Link
-              to="/"
-              className="mt-4 flex w-full justify-center text-sm/6 font-semibold text-gray-800 hover:text-emerald-500"
-            >
-              ¿Tienes cuenta? Volver al login
-            </Link>
-=======
             
             <p className="mt-4 text-center text-sm text-gray-500">
               ¿Ya tienes cuenta?{" "}
@@ -381,7 +271,6 @@ function Register() {
                 Inicia sesión
               </Link>
             </p>
->>>>>>> Stashed changes
           </form>
         )}
 
@@ -389,25 +278,20 @@ function Register() {
           <form onSubmit={handleSubmit}>
             <div className="mb-5">
               <label className="mb-3 block text-base font-medium text-[#07074D]">
-                Fecha de Nacimiento *
+                Tarjeta de crédito *
               </label>
               <input
-                type="date"
-                name="birthDay"
-                value={form.birthDay}
+                type="text"
+                name="creditCard"
+                value={form.creditCard}
                 onChange={handleChange}
+                placeholder="1234 5678 9012 3456"
                 className={`block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-600 sm:text-sm/6 ${
-                  errors.birthDay ? "outline-red-500" : "outline-gray-300"
+                  errors.creditCard ? "outline-red-500" : "outline-gray-300"
                 }`}
               />
-<<<<<<< Updated upstream
-
-              {errors.birthDay && (
-                <p className="text-red-500 text-xs mt-1">{errors.birthDay}</p>
-=======
               {errors.creditCard && (
                 <p className="text-red-500 text-xs mt-1">{errors.creditCard}</p>
->>>>>>> Stashed changes
               )}
             </div>
 
@@ -415,25 +299,6 @@ function Register() {
               <label className="mb-3 block text-base font-medium text-[#07074D]">
                 País *
               </label>
-<<<<<<< Updated upstream
-
-              <select
-                name="location"
-                value={form.location}
-                onChange={handleChange}
-                className={`block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-600 sm:text-sm/6 ${
-                  errors.location ? "outline-red-500" : "outline-gray-300"
-                }`}
-              >
-                <option value="">Selecciona tu país</option>
-                {countryOptions.map((country) => (
-                  <option key={country} value={country}>
-                    {country}
-                  </option>
-                ))}
-              </select>
-
-=======
               <input
                 type="text"
                 name="location"
@@ -455,7 +320,6 @@ function Register() {
                   <option key={pais} value={pais} />
                 ))}
               </datalist>
->>>>>>> Stashed changes
               {errors.location && (
                 <p className="text-red-500 text-xs mt-1">{errors.location}</p>
               )}
@@ -484,24 +348,53 @@ function Register() {
 
             <div className="mb-5">
               <label className="mb-3 block text-base font-medium text-[#07074D]">
-                Moneda Preferida *
+                Fecha de nacimiento *
               </label>
-<<<<<<< Updated upstream
-
-              <select
-                name="preferCoin"
-                value={form.preferCoin}
-=======
               <input
                 type="date"
                 name="birthDay"
                 value={form.birthDay}
->>>>>>> Stashed changes
+                onChange={handleChange}
+                placeholder="DD/MM/AAAA"
+                className={`block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-600 sm:text-sm/6 ${
+                  errors.birthDay ? "outline-red-500" : "outline-gray-300"
+                }`}
+              />
+              {errors.birthDay && (
+                <p className="text-red-500 text-xs mt-1">{errors.birthDay}</p>
+              )}
+            </div>
+
+            <div className="mb-5">
+              <label className="mb-3 block text-base font-medium text-[#07074D]">
+                Dirección *
+              </label>
+              <input
+                type="text"
+                name="address"
+                value={form.address}
+                onChange={handleChange}
+                placeholder="Av. Siempre Viva 123"
+                className={`block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-600 sm:text-sm/6 ${
+                  errors.address ? "outline-red-500" : "outline-gray-300"
+                }`}
+              />
+              {errors.address && (
+                <p className="text-red-500 text-xs mt-1">{errors.address}</p>
+              )}
+            </div>
+
+            <div className="mb-5">
+              <label className="mb-3 block text-base font-medium text-[#07074D]">
+                Moneda Preferida *
+              </label>
+              <select
+                name="preferCoin"
+                value={form.preferCoin}
                 onChange={handleChange}
                 className={`block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-600 sm:text-sm/6 ${
                   errors.preferCoin ? "outline-red-500" : "outline-gray-300"
                 }`}
-<<<<<<< Updated upstream
               >
                 <option value="">Selecciona una moneda</option>
                 <option value="USD">🇺🇸 Dólar Estadounidense (USD)</option>
@@ -525,14 +418,8 @@ function Register() {
                 <option value="DKK">🇩🇰 Corona Danesa (DKK)</option>
                 <option value="INR">🇮🇳 Rupia India (INR)</option>
               </select>
-
               {errors.preferCoin && (
                 <p className="text-red-500 text-xs mt-1">{errors.preferCoin}</p>
-=======
-              />
-              {errors.birthDay && (
-                <p className="text-red-500 text-xs mt-1">{errors.birthDay}</p>
->>>>>>> Stashed changes
               )}
             </div>
 
@@ -550,66 +437,57 @@ function Register() {
                   errors.mensualIngres ? "outline-red-500" : "outline-gray-300"
                 }`}
               />
-<<<<<<< Updated upstream
-              {/* Checkboxes */}
-              <div className="space-y-3 pt-4">
-                <div className="flex items-start gap-3">
-                  <input
-                    type="checkbox"
-                    id="notifications"
-                    name="receiveNotifications"
-                    checked={form.receiveNotifications}
-                    onChange={(e) =>
-                      setForm({ ...form, receiveNotifications: e.target.checked })
-                    }
-                    className="mt-1 h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
-                  />
-                  <label
-                    htmlFor="notifications"
-                    className="text-sm text-gray-700 cursor-pointer"
-                  >
-                    Quiero recibir notificaciones sobre presupuestos, alertas y
-                    consejos financieros
-                  </label>
-                </div>
+              {errors.mensualIngres && (
+                <p className="text-red-500 text-xs mt-1">{errors.mensualIngres}</p>
+              )}
+            </div>
 
-                <div className="flex items-start gap-3">
-                  <input
-                    type="checkbox"
-                    id="terms"
-                    name="acceptTerms"
-                    checked={form.acceptTerms}
-                    onChange={(e) =>
-                      setForm({ ...form, acceptTerms: e.target.checked })
-                    }
-                    required
-                    className="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                  />
-                  <label
-                    htmlFor="terms"
-                    className="text-sm text-gray-700 cursor-pointer"
-                  >
-                    Acepto los{" "}
-                    <span className="text-blue-600 hover:underline">
-                      términos y condiciones
-                    </span>{" "}
-                    y la{" "}
-                    <span className="text-blue-600 hover:underline">
-                      política de privacidad
-                    </span>
-                    <span className="text-red-500"> *</span>
-                  </label>
-                </div>
+            <div className="space-y-3 pt-4 mb-5">
+              <div className="flex items-start gap-3">
+                <input
+                  type="checkbox"
+                  id="notifications"
+                  name="receiveNotifications"
+                  checked={form.receiveNotifications}
+                  onChange={handleChange}
+                  className="mt-1 h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
+                />
+                <label
+                  htmlFor="notifications"
+                  className="text-sm text-gray-700 cursor-pointer"
+                >
+                  Quiero recibir notificaciones sobre presupuestos, alertas y
+                  consejos financieros
+                </label>
               </div>
 
-              {errors.mensualIngres && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.mensualIngres}
-                </p>
-=======
-              {errors.address && (
-                <p className="text-red-500 text-xs mt-1">{errors.address}</p>
->>>>>>> Stashed changes
+              <div className="flex items-start gap-3">
+                <input
+                  type="checkbox"
+                  id="terms"
+                  name="acceptTerms"
+                  checked={form.acceptTerms}
+                  onChange={handleChange}
+                  required
+                  className="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="terms"
+                  className="text-sm text-gray-700 cursor-pointer"
+                >
+                  Acepto los{" "}
+                  <span className="text-blue-600 hover:underline">
+                    términos y condiciones
+                  </span>{" "}
+                  y la{" "}
+                  <span className="text-blue-600 hover:underline">
+                    política de privacidad
+                  </span>
+                  <span className="text-red-500"> *</span>
+                </label>
+              </div>
+              {errors.acceptTerms && (
+                <p className="text-red-500 text-xs mt-1">{errors.acceptTerms}</p>
               )}
             </div>
 
@@ -626,21 +504,11 @@ function Register() {
               <button
                 type="submit"
                 disabled={loading}
-<<<<<<< Updated upstream
                 className="flex w-full justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed"
-=======
-                className="flex w-full justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 disabled:opacity-50"
->>>>>>> Stashed changes
               >
                 {loading ? "Registrando..." : "Registrarse"}
               </button>
             </div>
-            <Link
-              to="/"
-              className="mt-4 flex w-full justify-center text-sm/6 font-semibold text-gray-800 hover:text-emerald-500"
-            >
-              ¿Tienes cuenta? Volver al login
-            </Link>
           </form>
         )}
       </div>
