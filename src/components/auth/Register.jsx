@@ -153,7 +153,7 @@ function Register() {
 
       // Esperar un momento para que el usuario vea el mensaje de éxito
       setTimeout(() => {
-        navigate("/");
+        navigate("/dashboard");
       }, 2000);
     } catch (err) {
       console.error("Error al registrar:", err);
