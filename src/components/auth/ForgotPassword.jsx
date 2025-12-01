@@ -1,25 +1,27 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuthStore } from "../../store/authStore";
+import api from "../../api/api";
 import logo from "../../assets/images/finance-flow-logo-gradient.svg";
 
 function ForgotPassword() {
-  const { resetPassword, loading, error } = useAuthStore();
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
+    setError("");
+    setLoading(true);
 
     try {
-      // Llamar a tu backend
       const response = await api.post("/auth/forgot-password", { email });
-      
-      setMessage(" Email enviado! Revisa tu bandeja de entrada");
-      setEmail(""); 
+
+      setMessage("Email enviado! Revisa tu bandeja de entrada");
+      setEmail("");
     } catch (error) {
-      setError(" Error: " + (error.response?.data?.message || "No se pudo enviar el email"));
+      setError("Error: " + (error.response?.data?.message || "No se pudo enviar el email"));
     } finally {
       setLoading(false);
     }
