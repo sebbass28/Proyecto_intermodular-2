@@ -19,7 +19,7 @@ function ForgotPassword() {
       const response = await api.post("/auth/forgot-password", { email });
       
       setMessage(" Email enviado! Revisa tu bandeja de entrada");
-      setEmail(""); // Limpiar el formulario
+      setEmail(""); 
     } catch (error) {
       setError(" Error: " + (error.response?.data?.message || "No se pudo enviar el email"));
     } finally {
