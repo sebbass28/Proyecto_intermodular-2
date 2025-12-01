@@ -11,7 +11,6 @@ function ForgotPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
-<<<<<<< HEAD
 
     try {
       // Llamar a tu backend
@@ -23,11 +22,6 @@ function ForgotPassword() {
       setError(" Error: " + (error.response?.data?.message || "No se pudo enviar el email"));
     } finally {
       setLoading(false);
-=======
-    const success = await resetPassword(email);
-    if (success) {
-      setMessage("Si el correo existe, recibirás instrucciones para restablecer tu contraseña.");
->>>>>>> 3b65f3ffa953d39e44914f39cf1bb55709d341db
     }
   };
 
