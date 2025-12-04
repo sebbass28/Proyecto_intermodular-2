@@ -128,7 +128,7 @@ function Register() {
       await register(form);
       setSuccessMessage("¡Registro exitoso! Redirigiendo al login...");
       setTimeout(() => {
-        navigate("/");
+        navigate("/dashboard");
       }, 2000);
     } catch (err) {
       console.error("Error al registrar:", err);
