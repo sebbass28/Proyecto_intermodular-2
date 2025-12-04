@@ -1,30 +1,36 @@
 import { useState, useEffect } from "react";
 import { useAuthStore } from "../../store/authStore";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/finance-flow-logo-gradient.svg";
 
 function Login() {
+  const navigate = useNavigate();
   const { user, token, loading, error, login, tryAutoLogin } = useAuthStore();
 
   useEffect(() => {
     tryAutoLogin();
   }, []);
 
-  const handleSubmit = async (e) => {
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const email = formData.get("email");
-    const password = formData.get("password");
-    
     await login(email, password);
   };
 
-  return (
-    <div className="flex items-center justify-center p-6 md:p-12 bg-gray-100 min-h-screen">
+   return (
+    <div className="flex items-center justify-center p-6 md:p-12 bg-gradient-to-r from-green-50 to-emerald-100 min-h-screen">
       <div className="mx-auto w-full max-w-[550px] bg-white p-8 rounded-xl shadow-lg">
         <img
           alt="FinanceFlow"
-          src={logo}
+          src="/finance-flow-logo-gradient.svg"
           className="mx-auto h-28 w-auto hover:drop-shadow-[0_0_10px_theme(colors.emerald.400)] transition-all duration-300;"
         />
 
@@ -36,8 +42,14 @@ function Login() {
           Tu flujo financiero en control
         </p>
 
+        {error && (
+          <div className="mt-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
+            {typeof error === 'string' ? error : JSON.stringify(error)}
+          </div>
+        )}
+
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleLogin} className="space-y-6">
             <div>
               <label
                 htmlFor="email"
@@ -52,6 +64,8 @@ function Login() {
                   name="email"
                   type="email"
                   required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
                   placeholder="ejemplo@email.com"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-600 sm:text-sm/6"
@@ -83,6 +97,8 @@ function Login() {
                   id="password"
                   name="password"
                   type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="********"
                   required
                   autoComplete="current-password"
@@ -97,10 +113,9 @@ function Login() {
                 disabled={loading}
                 className="flex w-full justify-center rounded-md bg-emerald-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? "Signing in..." : "Sign in"}
+                {loading ? "Ingresando..." : "Sign in"}
               </button>
             </div>
-            {error && <p className="text-red-500 text-center text-sm">{error}</p>}
           </form>
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">
@@ -117,5 +132,4 @@ function Login() {
     </div>
   );
 }
-
 export default Login;
