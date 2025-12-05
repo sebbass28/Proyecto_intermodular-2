@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://backend2-7u6r.onrender.com/api", // tu backend
+  baseURL:
+    import.meta.env.VITE_API_URL || "http://localhost:4000/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -9,7 +10,7 @@ const api = axios.create({
 
 // Interceptor para agregar token automáticamente
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("auth_token");
+  const token = localStorage.getItem("token");
   if (token) config.headers["Authorization"] = `Bearer ${token}`;
   return config;
 });
