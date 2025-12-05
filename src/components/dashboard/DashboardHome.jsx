@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
-import { useAuthStore } from "../../store/authStore";
-// Eliminamos useNavigate, ya que no se puede usar fuera de un <Router>
-// import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../store/authStore"; 
 import {
   Home,
   DollarSign,
@@ -50,7 +48,8 @@ const StatCard = ({ title, value, icon: Icon, colorClass, currency = '€' }) =>
 
 // Componente principal del Dashboard
 const DashboardHome = () => {
-  // Eliminamos const navigate = useNavigate();
+  const { logout } = useAuthStore();
+  const navigate = useNavigate();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState('Inicio'); // Simulación de la página activa
@@ -64,7 +63,7 @@ const DashboardHome = () => {
       window.location.href = path;
       return;
     }
-    
+
     // Para la navegación interna del Dashboard, solo simulamos el cambio de página
     setCurrentPage(name);
     setIsSidebarOpen(false); // Cierra el menú en móvil
@@ -72,9 +71,9 @@ const DashboardHome = () => {
   };
 
   const handleLogout = () => {
-    // Lógica para cerrar sesión
     console.log('Cerrando sesión...');
-    handleNavigation('/'); // Redirigir al login
+    logout(); // Limpia el token y el usuario del store
+    navigate('/'); // Redirigir al login
   };
 
   return (
