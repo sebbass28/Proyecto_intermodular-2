@@ -38,8 +38,20 @@ function Register() {
   useEffect(() => {
     async function fetchCountries() {
       try {
-        const response = await fetch("https://restcountries.com/v3.1/all");
-        if (!response.ok) throw new Error("No se pudieron cargar los países");
+        const response = await fetch("https://restcountries.com/v3.1/all?fields=name");
+        if (!response.ok) {
+          // Fallback to hardcoded list if API fails
+          const fallbackCountries = [
+            "España", "México", "Argentina", "Colombia", "Chile", "Perú",
+            "Venezuela", "Ecuador", "Guatemala", "Cuba", "Bolivia", "Panamá",
+            "Costa Rica", "Uruguay", "Honduras", "Paraguay", "Nicaragua",
+            "Estados Unidos", "Canadá", "Brasil", "Reino Unido", "Francia",
+            "Alemania", "Italia", "Portugal", "Países Bajos", "Bélgica",
+            "Suiza", "Austria", "Suecia", "Noruega", "Dinamarca", "Finlandia"
+          ];
+          setCountryOptions(fallbackCountries);
+          return;
+        }
         const data = await response.json();
         const countryNames = data.map((country) => country.name.common);
         countryNames.sort((a, b) =>
@@ -48,6 +60,16 @@ function Register() {
         setCountryOptions(countryNames);
       } catch (error) {
         console.error("Error al cargar países:", error);
+        // Use fallback countries on error
+        const fallbackCountries = [
+          "España", "México", "Argentina", "Colombia", "Chile", "Perú",
+          "Venezuela", "Ecuador", "Guatemala", "Cuba", "Bolivia", "Panamá",
+          "Costa Rica", "Uruguay", "Honduras", "Paraguay", "Nicaragua",
+          "Estados Unidos", "Canadá", "Brasil", "Reino Unido", "Francia",
+          "Alemania", "Italia", "Portugal", "Países Bajos", "Bélgica",
+          "Suiza", "Austria", "Suecia", "Noruega", "Dinamarca", "Finlandia"
+        ];
+        setCountryOptions(fallbackCountries);
       } finally {
         setIsLoadingCountries(false);
       }
