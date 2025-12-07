@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import api from "../api/api";
 
-console.log("Zustand create import:", create);
+
 
 export const useAuthStore = create((set, get) => ({
   user: null,
@@ -122,6 +122,22 @@ export const useAuthStore = create((set, get) => ({
     }
   },
   // Acción para actualizar perfil completo
+  deleteAccount: async () => {
+    set({ loading: true, error: null });
+    try {
+      await api.delete("/users/me");
+      localStorage.removeItem("token");
+      set({ user: null, token: null, loading: false });
+      return true;
+    } catch (err) {
+      set({
+        error: err.response?.data?.error || "Error al eliminar cuenta",
+        loading: false,
+      });
+      return false;
+    }
+  },
+  
   updateProfile: async (profileData) => {
     set({ loading: true, error: null });
     const currentUser = get().user;
