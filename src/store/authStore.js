@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import api from "../api/api";
 
+console.log("Zustand create import:", create);
+
 export const useAuthStore = create((set, get) => ({
   user: null,
   token: localStorage.getItem("token") || null,
