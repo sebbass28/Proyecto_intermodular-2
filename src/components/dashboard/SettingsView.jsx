@@ -37,9 +37,9 @@ const SettingsView = () => {
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto pb-10">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-extrabold text-gray-900">Configuración</h1>
+      <div className="flex items-center gap-2">
         <Settings className="w-8 h-8 text-emerald-500" />
+        <h1 className="text-3xl font-extrabold text-gray-900">Configuración</h1>
       </div>
 
       {/* Security Section - 2FA */}
