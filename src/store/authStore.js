@@ -92,7 +92,23 @@ export const useAuthStore = create((set, get) => ({
       return true;
     } catch (err) {
       set({
-        error: err.response?.data?.message || "Error al enviar el correo",
+        error: err.response?.data?.error || err.response?.data?.message || "Error al enviar el correo",
+        loading: false,
+      });
+      return false;
+    }
+  },
+
+  // Acción para confirmar nueva contraseña
+  confirmPasswordReset: async (token, newPassword) => {
+    set({ loading: true, error: null });
+    try {
+      await api.post("/auth/reset-password", { token, newPassword });
+      set({ loading: false });
+      return true;
+    } catch (err) {
+      set({
+        error: err.response?.data?.error || "Error al restablecer contraseña",
         loading: false,
       });
       return false;
