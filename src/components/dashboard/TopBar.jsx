@@ -68,8 +68,16 @@ const TopBar = ({ onSearch, onSettingsClick }) => {
 
                 {/* Avatar y Nombre */}
                 <div className="flex items-center gap-3 cursor-pointer p-1 pr-3 rounded-full hover:bg-gray-50 border border-transparent hover:border-gray-200 transition-all">
-                    <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white font-bold text-sm shadow-sm ring-2 ring-white">
-                        {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white font-bold text-sm shadow-sm ring-2 ring-white overflow-hidden">
+                        {user?.avatar_url ? (
+                            <img 
+                                src={`${(import.meta.env.VITE_API_URL || "https://backend2-7u6r.onrender.com").replace('/api', '')}${user.avatar_url}`} 
+                                alt="Profile" 
+                                className="w-full h-full object-cover"
+                            />
+                        ) : (
+                            user?.name ? user.name.charAt(0).toUpperCase() : 'U'
+                        )}
                     </div>
                     <div className="hidden md:block text-left">
                         <p className="text-sm font-semibold text-gray-700 leading-none mb-0.5">
