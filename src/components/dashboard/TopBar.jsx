@@ -1,6 +1,6 @@
 import { useAuthStore } from "../../store/authStore";
 
-const TopBar = ({ onSearch, onSettingsClick }) => {
+const TopBar = ({ onSearch, onSettingsClick, onProfileClick, onNotificationsClick }) => {
     const { user } = useAuthStore();
 
     return (
@@ -55,7 +55,10 @@ const TopBar = ({ onSearch, onSettingsClick }) => {
                     </svg>
                 </button>
                 {/* Campana */}
-                <button className="relative p-2 text-gray-400 hover:text-emerald-600 hover:bg-gray-100 rounded-full transition-colors">
+                <button 
+                  onClick={onNotificationsClick}
+                  className="relative p-2 text-gray-400 hover:text-emerald-600 hover:bg-gray-100 rounded-full transition-colors"
+                >
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
                     </svg>
@@ -67,7 +70,10 @@ const TopBar = ({ onSearch, onSettingsClick }) => {
                 <div className="h-8 w-px bg-gray-200 hidden md:block"></div>
 
                 {/* Avatar y Nombre */}
-                <div className="flex items-center gap-3 cursor-pointer p-1 pr-3 rounded-full hover:bg-gray-50 border border-transparent hover:border-gray-200 transition-all">
+                <div 
+                  onClick={onProfileClick}
+                  className="flex items-center gap-3 cursor-pointer p-1 pr-3 rounded-full hover:bg-gray-50 border border-transparent hover:border-gray-200 transition-all"
+                >
                     <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white font-bold text-sm shadow-sm ring-2 ring-white overflow-hidden">
                         {user?.avatar_url ? (
                             <img 
