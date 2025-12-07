@@ -50,7 +50,33 @@ const mockNotifications = [
   { id: 3, title: 'Presupuesto excedido', time: 'Hace 1 día', unread: false },
 ];
 
-// ... (navigationItems and StatCard remain the same) ...
+// Configuración de los ítems del menú de navegación
+const navigationItems = [
+  { name: 'Inicio', path: '/dashboard', icon: Home, current: true, description: 'Resumen y saldo general' },
+  { name: 'Transacciones', path: '/transactions', icon: DollarSign, current: false, description: 'Ver y registrar movimientos' },
+  { name: 'Presupuestos', path: '/budgets', icon: TrendingUp, current: false, description: 'Control de gastos mensuales' },
+  { name: 'Carteras', path: '/wallets', icon: Wallet, current: false, description: 'Gestión de carteras y saldos' },
+  { name: 'Inversiones', path: '/investments', icon: PiggyBank, current: false, description: 'Seguimiento de inversiones' },
+  { name: 'Metas', path: '/goals', icon: Target, current: false, description: 'Objetivos de ahorro' },
+  { name: 'Reportes', path: '/reports', icon: BarChart3, current: false, description: 'Análisis y reportes' },
+  { name: 'Cuentas', path: '/accounts', icon: CreditCard, current: false, description: 'Gestión de tarjetas y bancos' },
+  { name: 'Perfil', path: '/profile', icon: User, current: false, description: 'Configuración personal y datos' },
+  { name: 'Configuración', path: '/settings', icon: Settings, current: false, description: 'Seguridad y preferencias' },
+];
+
+// Componente para las tarjetas de resumen
+const StatCard = ({ title, value, icon: Icon, colorClass, currency = '€' }) => (
+  <div className="bg-white p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
+    <div className="flex items-center justify-between">
+      <p className="text-sm font-medium text-gray-500">{title}</p>
+      {/* Usamos Icon como componente JSX */}
+      <Icon className={`w-5 h-5 ${colorClass}`} />
+    </div>
+    <p className="mt-1 text-3xl font-bold text-gray-900">
+      {currency} {value.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+    </p>
+  </div>
+);
 
 // Componente principal del Dashboard
 const DashboardHome = () => {
