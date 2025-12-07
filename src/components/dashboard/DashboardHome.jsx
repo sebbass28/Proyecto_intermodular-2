@@ -110,7 +110,10 @@ const DashboardHome = () => {
 
       {/* 1. Barra Superior (TopBar) - Fixed Full Width (Glass Effect Overlay) */}
       <div className="fixed top-0 left-0 right-0 z-50 hidden lg:block">
-         <TopBar onSearch={(q) => console.log('Searching:', q)} />
+         <TopBar 
+           onSearch={(q) => console.log('Searching:', q)} 
+           onSettingsClick={() => handleNavigation('/settings', 'Configuración')}
+         />
       </div>
 
       {/* 2. Contenedor Principal (Flex Row: Sidebar + Contenido) */}
