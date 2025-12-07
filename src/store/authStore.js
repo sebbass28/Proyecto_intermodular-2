@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import api from "../api/api";
 
-export const useAuthStore = create((set) => ({
+export const useAuthStore = create((set, get) => ({
   user: null,
   token: localStorage.getItem("token") || null,
   loading: false,
@@ -21,27 +21,6 @@ export const useAuthStore = create((set) => ({
       });
       throw err;
     }
-  },
-
-  // Acción de login
-  login: async (email, password) => {
-    set({ loading: true, error: null });
-    try {
-      const res = await api.post("/auth/login", { email, password });
-      set({ user: res.data.user, token: res.data.token, loading: false });
-      localStorage.setItem("token", res.data.token);
-    } catch (err) {
-      set({
-        error: err.response?.data?.error || err.response?.data?.message || "Error al iniciar sesión",
-        loading: false,
-      });
-      throw err;
-    }
-  },
-
-  // Acción para cerrar sesión
-  logout: () => {
-    localStorage.removeItem("token");
     set({ user: null, token: null });
   },
 
@@ -52,7 +31,7 @@ export const useAuthStore = create((set) => ({
 
     set({ loading: true });
     try {
-      // Ajusta este endpoint según tu backend (ej: /auth/me o /auth/profile)
+      // Ajusta este endpoint según el backend
       const res = await api.get("/auth/me");
       set({ user: res.data, token, loading: false });
     } catch (err) {
@@ -72,6 +51,50 @@ export const useAuthStore = create((set) => ({
     } catch (err) {
       set({
         error: err.response?.data?.message || "Error al enviar el correo",
+        loading: false,
+      });
+      return false;
+    }
+  },
+  
+  // Acción para subir avatar
+  uploadAvatar: async (formData) => {
+    set({ loading: true, error: null });
+    try {
+      // Necesitamos configurar el header para multipart/form-data
+      const res = await api.post("/users/avatar", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      // Actualizamos el usuario con la nueva info (que incluirá avatar_url)
+      set((state) => ({ 
+        user: { ...state.user, ...res.data.user }, 
+        loading: false 
+      }));
+      return true;
+    } catch (err) {
+      set({
+        error: err.response?.data?.error || "Error al subir la imagen",
+        loading: false,
+      });
+      return false;
+    }
+  },
+  // Acción para actualizar perfil completo
+  updateProfile: async (profileData) => {
+    set({ loading: true, error: null });
+    const currentUser = get().user;
+    if (!currentUser) return false;
+    
+    try {
+      const res = await api.put(`/users/${currentUser.id}`, profileData);
+      set((state) => ({ 
+        user: { ...state.user, ...res.data.user }, 
+        loading: false 
+      }));
+      return true;
+    } catch (err) {
+      set({
+        error: err.response?.data?.error || "Error al actualizar perfil",
         loading: false,
       });
       return false;
