@@ -66,11 +66,18 @@ const StatCard = ({ title, value, icon: Icon, colorClass, currency = '€' }) =>
 
 // Componente principal del Dashboard
 const DashboardHome = () => {
-  const { logout } = useAuthStore();
+  const { logout, user, tryAutoLogin } = useAuthStore();
   const navigate = useNavigate();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState('Inicio'); // Simulación de la página activa
+
+  // Intentar recuperar sesión al recargar
+  React.useEffect(() => {
+    if (!user) {
+      tryAutoLogin();
+    }
+  }, []);
 
   const handleNavigation = (path, name) => {
     if (path === '/register' || path === '/') {
