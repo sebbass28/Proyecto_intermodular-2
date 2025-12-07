@@ -9,6 +9,46 @@ export const useAuthStore = create((set, get) => ({
   loading: false,
   error: null,
 
+  // Acción de Login
+  login: async (email, password) => {
+    set({ loading: true, error: null });
+    try {
+      const res = await api.post("/auth/login", { email, password });
+      set({ user: res.data.user, token: res.data.token, loading: false });
+      localStorage.setItem("token", res.data.token);
+    } catch (err) {
+      set({
+        error: err.response?.data?.error || "Error al iniciar sesión",
+        loading: false,
+      });
+    }
+  },
+
+  // Acción de Logout
+  logout: () => {
+    localStorage.removeItem("token");
+    set({ user: null, token: null });
+  },
+
+  // Cambiar contraseña
+  changePassword: async (currentPassword, newPassword) => {
+    try {
+      const token = get().token;
+      await api.post(
+        "/auth/change-password",
+        { currentPassword, newPassword },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      return { success: true };
+    } catch (error) {
+      console.error('Change password error:', error);
+      return { 
+        success: false, 
+        error: error.response?.data?.error || 'Error al cambiar la contraseña' 
+      };
+    }
+  },
+
   // Acción de registro
   register: async (userData) => {
     set({ loading: true, error: null });
