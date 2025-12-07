@@ -1,16 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Settings, Shield, Smartphone, Monitor, Trash2, Lock } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 
 const SettingsView = () => {
-  const { changePassword } = useAuthStore();
+  const { changePassword, deleteAccount, user } = useAuthStore();
   
-  const [passwords, setPasswords] = useState({
-    current: '',
-    new: '',
-    confirm: ''
-  });
+  const [passwords, setPasswords] = useState({ current: '', new: '', confirm: '' });
   const [status, setStatus] = useState({ type: '', message: '' });
+
+  // 2FA State (Simulated per session/browser for this demo)
+  const [twoFactorEnabled, setTwoFactorEnabled] = useState(
+    localStorage.getItem('2fa_enabled') === 'true'
+  );
+
+  // Mock Devices State
+  const [devices, setDevices] = useState([
+    { id: 1, name: 'Chrome en Windows', type: 'desktop', active: true, location: 'Madrid, España', ip: '192.168.1.1' },
+    { id: 2, name: 'iPhone 13 Pro', type: 'mobile', active: false, location: 'Barcelona, España', lastActive: 'Hace 2 horas' }
+  ]);
 
   const handlePasswordChange = async (e) => {
     e.preventDefault();
@@ -22,16 +29,34 @@ const SettingsView = () => {
       setStatus({ type: 'error', message: 'La contraseña debe tener al menos 6 caracteres' });
       return;
     }
-
     setStatus({ type: 'loading', message: 'Actualizando...' });
     const result = await changePassword(passwords.current, passwords.new);
-    
     if (result.success) {
       setStatus({ type: 'success', message: 'Contraseña actualizada correctamente' });
       setPasswords({ current: '', new: '', confirm: '' });
       setTimeout(() => setStatus({ type: '', message: '' }), 3000);
     } else {
       setStatus({ type: 'error', message: result.error });
+    }
+  };
+
+  const handleToggle2FA = () => {
+    // In a real app, this would verify a code or QR
+    const newState = !twoFactorEnabled;
+    setTwoFactorEnabled(newState);
+    localStorage.setItem('2fa_enabled', newState);
+  };
+
+  const handleRevokeDevice = (id) => {
+    setDevices(devices.filter(d => d.id !== id));
+  };
+
+  const handleDeleteAccount = async () => {
+    if (window.confirm('¿ESTÁ SEGURO? Esta acción eliminará permanentemente su cuenta y todos sus datos. No se puede deshacer.')) {
+      const success = await deleteAccount();
+      if (!success) {
+        alert("Error al eliminar la cuenta. Intente nuevamente.");
+      }
     }
   };
 
@@ -56,10 +81,15 @@ const SettingsView = () => {
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-base font-semibold text-gray-900">Autenticación de dos factores (2FA)</h3>
-              <p className="text-sm text-gray-500 mt-1">Añade una capa extra de seguridad a tu cuenta requerir un código al iniciar sesión.</p>
+              <p className="text-sm text-gray-500 mt-1">Añade una capa extra de seguridad a tu cuenta.</p>
             </div>
             <label className="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" className="sr-only peer" />
+              <input 
+                type="checkbox" 
+                className="sr-only peer" 
+                checked={twoFactorEnabled}
+                onChange={handleToggle2FA}
+              />
               <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600"></div>
             </label>
           </div>
@@ -73,7 +103,6 @@ const SettingsView = () => {
               <Lock className="w-6 h-6 text-emerald-600" />
               <h2 className="text-xl font-bold text-gray-900">Cambiar Contraseña</h2>
            </div>
-           <p className="text-gray-500 text-sm">Actualiza tu contraseña periódicamente para mantener tu cuenta segura.</p>
         </div>
         
         <div className="p-6">
@@ -135,42 +164,35 @@ const SettingsView = () => {
               <Monitor className="w-6 h-6 text-emerald-600" />
               <h2 className="text-xl font-bold text-gray-900">Dispositivos Conectados</h2>
            </div>
-           <p className="text-gray-500 text-sm">Gestiona los dispositivos que tienen acceso a tu cuenta.</p>
         </div>
         
         <div className="p-6 space-y-4">
-          {/* Mock Device 1 */}
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-            <div className="flex items-center gap-4">
-               <Monitor className="w-8 h-8 text-gray-400" />
-               <div>
-                 <p className="font-semibold text-gray-900">Chrome en Windows</p>
-                 <p className="text-xs text-green-600 font-medium flex items-center gap-1">
-                   <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                   Activo ahora
-                 </p>
-               </div>
+          {devices.length === 0 && <p className="text-gray-500">No hay otros dispositivos conectados.</p>}
+          {devices.map(device => (
+            <div key={device.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div className="flex items-center gap-4">
+                 {device.type === 'mobile' ? <Smartphone className="w-8 h-8 text-gray-400" /> : <Monitor className="w-8 h-8 text-gray-400" />}
+                 <div>
+                   <p className="font-semibold text-gray-900">{device.name}</p>
+                   <p className="text-xs text-gray-500">
+                     {device.active ? (
+                       <span className="text-green-600 font-medium flex items-center gap-1">
+                         <span className="w-2 h-2 rounded-full bg-green-500"></span> Activo ahora
+                       </span>
+                     ) : (
+                       `${device.location} · ${device.lastActive}`
+                     )}
+                   </p>
+                 </div>
+              </div>
+              <button 
+                onClick={() => handleRevokeDevice(device.id)}
+                className="text-sm text-gray-500 hover:text-red-600 font-medium transition-colors"
+              >
+                Cerrar sesión
+              </button>
             </div>
-            <button className="text-sm text-gray-500 hover:text-red-600 font-medium transition-colors">
-              Cerrar sesión
-            </button>
-          </div>
-
-          {/* Mock Device 2 */}
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-            <div className="flex items-center gap-4">
-               <Smartphone className="w-8 h-8 text-gray-400" />
-               <div>
-                 <p className="font-semibold text-gray-900">iPhone 13 Pro</p>
-                 <p className="text-xs text-gray-500">
-                   Hace 2 horas · Madrid, España
-                 </p>
-               </div>
-            </div>
-            <button className="text-sm text-gray-500 hover:text-red-600 font-medium transition-colors">
-              Cerrar sesión
-            </button>
-          </div>
+          ))}
         </div>
       </div>
 
@@ -181,7 +203,6 @@ const SettingsView = () => {
               <Trash2 className="w-6 h-6 text-red-600" />
               <h2 className="text-xl font-bold text-red-700">Zona de Peligro</h2>
            </div>
-           <p className="text-red-600/80 text-sm">Acciones irreversibles sobre tu cuenta.</p>
         </div>
         
         <div className="p-6">
@@ -189,19 +210,18 @@ const SettingsView = () => {
             <div>
               <h3 className="text-base font-semibold text-gray-900">Eliminar cuenta</h3>
               <p className="text-sm text-gray-500 mt-1">
-                Una vez que elimines tu cuenta, no hay vuelta atrás. Por favor, asegúrate.
+                Acción irreversible. Borrará todos tus datos.
               </p>
             </div>
             <button 
               className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm"
-              onClick={() => { if(window.confirm('¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.')) console.log('Delete account clicked'); }}
+              onClick={handleDeleteAccount}
             >
               Eliminar cuenta
             </button>
           </div>
         </div>
       </div>
-
     </div>
   );
 };
