@@ -13,12 +13,11 @@
     "@vitejs/plugin-react": "^4.3.1",
     "axios": "^1.7.2",
     "lucide-react": "^0.460.0",
-    "mailersend": "^2.6.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.23.1",
     "vite": "^5.4.1",
-    "zustand": "^4.5.0"
+    "zustand": "4.5.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
