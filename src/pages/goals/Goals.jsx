@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Plus, Target, Trash2, Edit2, TrendingUp } from 'lucide-react';
 import api from '../../api/api';
 
-export default function GoalsView() {
+export default function Goals() {
   const [goals, setGoals] = useState([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingGoal, setEditingGoal] = useState(null);
@@ -26,12 +26,10 @@ export default function GoalsView() {
     try {
       setLoading(true);
       const response = await api.get('/goals');
-      // Asegurarse de que siempre sea un array
-      setGoals(Array.isArray(response.data) ? response.data : []);
+      setGoals(response.data);
     } catch (error) {
       console.error('Error cargando metas:', error);
-      // En caso de error, establecer un array vacío
-      setGoals([]);
+      alert('Error al cargar metas');
     } finally {
       setLoading(false);
     }
@@ -438,4 +436,3 @@ export default function GoalsView() {
     </div>
   );
 }
-

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Plus, TrendingUp, TrendingDown, Trash2, Edit2, DollarSign } from 'lucide-react';
 import api from '../../api/api';
 
-export default function InvestmentsView() {
+export default function Investments() {
   const [investments, setInvestments] = useState([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingInvestment, setEditingInvestment] = useState(null);
@@ -27,10 +27,10 @@ export default function InvestmentsView() {
     try {
       setLoading(true);
       const response = await api.get('/investments');
-      setInvestments(Array.isArray(response.data) ? response.data : []);
+      setInvestments(response.data);
     } catch (error) {
       console.error('Error cargando inversiones:', error);
-      setInvestments([]);
+      alert('Error al cargar inversiones');
     } finally {
       setLoading(false);
     }
@@ -422,4 +422,3 @@ export default function InvestmentsView() {
     </div>
   );
 }
-
