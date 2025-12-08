@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react';
 import { Plus, Wallet, TrendingUp, TrendingDown, Trash2, Edit2 } from 'lucide-react';
 import api from '../../api/api';
 
-export default function WalletsView() {
+export default function Wallets() {
   const [wallets, setWallets] = useState([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingWallet, setEditingWallet] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Form state
   const [formData, setFormData] = useState({
     name: '',
     type: 'bank',
@@ -25,10 +26,10 @@ export default function WalletsView() {
     try {
       setLoading(true);
       const response = await api.get('/wallets');
-      setWallets(Array.isArray(response.data) ? response.data : []);
+      setWallets(response.data);
     } catch (error) {
       console.error('Error cargando carteras:', error);
-      setWallets([]);
+      alert('Error al cargar carteras');
     } finally {
       setLoading(false);
     }
@@ -130,23 +131,24 @@ export default function WalletsView() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="p-8">
+      <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-extrabold text-gray-900 mb-2">Carteras y Cuentas</h1>
+          <h1 className="text-3xl font-bold mb-2">Carteras y Cuentas</h1>
           <p className="text-gray-600">Gestiona todas tus cuentas y carteras</p>
         </div>
         <button
           onClick={() => setIsDialogOpen(true)}
-          className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg transition"
+          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
         >
           <Plus className="w-4 h-4" />
           Nueva Cartera
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-xl shadow-lg">
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="bg-white p-6 rounded-lg shadow">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-600 mb-1">Balance Total</p>
@@ -160,7 +162,7 @@ export default function WalletsView() {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-lg">
+        <div className="bg-white p-6 rounded-lg shadow">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-600 mb-1">Activos</p>
@@ -172,7 +174,7 @@ export default function WalletsView() {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-lg">
+        <div className="bg-white p-6 rounded-lg shadow">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-600 mb-1">Deudas</p>
@@ -185,12 +187,13 @@ export default function WalletsView() {
         </div>
       </div>
 
-      <div className="bg-white p-6 rounded-xl shadow-lg">
+      {/* Wallets List */}
+      <div className="bg-white p-6 rounded-lg shadow">
         <h2 className="text-xl font-bold mb-6">Mis Carteras</h2>
 
         {loading ? (
           <div className="text-center py-8">
-            <div className="w-8 h-8 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
             <p className="text-gray-600 mt-4">Cargando carteras...</p>
           </div>
         ) : wallets.length === 0 ? (
@@ -209,7 +212,7 @@ export default function WalletsView() {
             {wallets.map((wallet) => (
               <div
                 key={wallet.id}
-                className="p-6 rounded-lg border hover:shadow-lg transition-shadow"
+                className="p-6 rounded-lg border hover:shadow-lg transition-shadow cursor-pointer relative overflow-hidden"
                 style={{ borderLeft: `4px solid ${wallet.color}` }}
               >
                 <div className="flex items-start justify-between mb-4">
@@ -240,7 +243,7 @@ export default function WalletsView() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleEdit(wallet)}
-                    className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm border border-emerald-600 text-emerald-600 rounded hover:bg-emerald-50"
+                    className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm border border-blue-600 text-blue-600 rounded hover:bg-blue-50"
                   >
                     <Edit2 className="w-4 h-4" />
                     Editar
@@ -258,6 +261,7 @@ export default function WalletsView() {
         )}
       </div>
 
+      {/* Create/Edit Dialog */}
       {isDialogOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
@@ -265,7 +269,9 @@ export default function WalletsView() {
               {editingWallet ? 'Editar Cartera' : 'Nueva Cartera'}
             </h2>
             <p className="text-gray-600 mb-6">
-              {editingWallet ? 'Actualiza los detalles de tu cartera' : 'Agrega una nueva cartera o cuenta'}
+              {editingWallet
+                ? 'Actualiza los detalles de tu cartera'
+                : 'Agrega una nueva cartera o cuenta'}
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -330,6 +336,8 @@ export default function WalletsView() {
                     <option value="EUR">EUR - Euro</option>
                     <option value="GBP">GBP - Libra</option>
                     <option value="MXN">MXN - Peso</option>
+                    <option value="ARS">ARS - Peso Argentino</option>
+                    <option value="COP">COP - Peso Colombiano</option>
                   </select>
                 </div>
               </div>
@@ -368,7 +376,7 @@ export default function WalletsView() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
+                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
                 >
                   {editingWallet ? 'Actualizar' : 'Crear'} Cartera
                 </button>

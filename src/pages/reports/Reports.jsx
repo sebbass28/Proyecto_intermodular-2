@@ -17,7 +17,7 @@ import {
 } from 'recharts';
 import api from '../../api/api';
 
-export default function ReportsView() {
+export default function Reports() {
   const [transactions, setTransactions] = useState([]);
   const [budgets, setBudgets] = useState([]);
   const [period, setPeriod] = useState('month');
@@ -34,12 +34,11 @@ export default function ReportsView() {
         api.get('/transactions'),
         api.get('/budgets'),
       ]);
-      setTransactions(Array.isArray(transactionsRes.data) ? transactionsRes.data : []);
-      setBudgets(Array.isArray(budgetsRes.data) ? budgetsRes.data : []);
+      setTransactions(transactionsRes.data);
+      setBudgets(budgetsRes.data);
     } catch (error) {
       console.error('Error cargando datos:', error);
-      setTransactions([]);
-      setBudgets([]);
+      alert('Error al cargar los datos');
     } finally {
       setLoading(false);
     }
@@ -351,4 +350,3 @@ export default function ReportsView() {
     </div>
   );
 }
-
