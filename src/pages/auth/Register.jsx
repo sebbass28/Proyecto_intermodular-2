@@ -14,7 +14,6 @@ function Register() {
     email: "",
     password: "",
     passwordConfirm: "",
-    creditCard: "",
     location: "",
     numberPhone: "",
     birthDay: "",
@@ -128,7 +127,7 @@ function Register() {
     }
 
     // Validar campos del paso 2
-    if (!form.creditCard) newErrors.creditCard = "La tarjeta es obligatoria.";
+
     if (!form.location) newErrors.location = "El país es obligatorio.";
     if (!form.numberPhone) newErrors.numberPhone = "El teléfono es obligatorio.";
     if (!form.birthDay) newErrors.birthDay = "La fecha de nacimiento es obligatoria.";
@@ -298,27 +297,9 @@ function Register() {
 
         {count === 2 && (
           <form onSubmit={handleSubmit}>
-            <div className="mb-5">
-              <label className="mb-3 block text-base font-medium text-[#07074D]">
-                Tarjeta de crédito *
-              </label>
-              <input
-                type="text"
-                name="creditCard"
-                value={form.creditCard}
-                onChange={handleChange}
-                placeholder="1234 5678 9012 3456"
-                className={`block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-600 sm:text-sm/6 ${
-                  errors.creditCard ? "outline-red-500" : "outline-gray-300"
-                }`}
-              />
-              {errors.creditCard && (
-                <p className="text-red-500 text-xs mt-1">{errors.creditCard}</p>
-              )}
-            </div>
 
-            <div className="mb-5">
-              <label className="mb-3 block text-base font-medium text-[#07074D]">
+
+            <div className="mb-5">              <label className="mb-3 block text-base font-medium text-[#07074D]">
                 País *
               </label>
               <input
