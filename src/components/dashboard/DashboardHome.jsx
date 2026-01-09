@@ -114,9 +114,11 @@ const navigationItems = [
 ];
 
 const StatCard = ({ title, value, icon: Icon, colorClass, currency = "€" }) => (
-  <div className="bg-white p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.02] border border-gray-100">
+  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.02] border border-gray-100 dark:border-gray-700">
     <div className="flex items-center justify-between">
-      <p className="text-sm font-medium text-gray-500">{title}</p>
+      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+        {title}
+      </p>
       <div
         className={`p-2 rounded-lg ${colorClass
           .replace("text-", "bg-")
@@ -125,7 +127,7 @@ const StatCard = ({ title, value, icon: Icon, colorClass, currency = "€" }) =>
         <Icon className={`w-5 h-5 ${colorClass}`} />
       </div>
     </div>
-    <p className="mt-4 text-3xl font-bold text-gray-900 tracking-tight">
+    <p className="mt-4 text-3xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">
       {currency}{" "}
       {value !== undefined && value !== null
         ? value.toLocaleString("es-ES", {
@@ -202,7 +204,7 @@ const DashboardHome = () => {
     : [];
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50 font-inter text-gray-900">
+    <div className="flex flex-col h-screen bg-gray-50 dark:bg-gray-900 font-inter text-gray-900 dark:text-gray-100 transition-colors duration-300">
       {/* 1. Barra Superior */}
       <div className="fixed top-0 left-0 right-0 z-50 hidden lg:block">
         <TopBar
@@ -307,7 +309,7 @@ const DashboardHome = () => {
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="flex justify-between items-end mb-8">
                   <div>
-                    <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+                    <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">
                       Resumen Financiero
                     </h1>
                     <p className="text-gray-500 mt-1">
@@ -352,8 +354,8 @@ const DashboardHome = () => {
 
                 {/* GRAPH SECTION */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-                  <div className="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-[400px]">
-                    <h2 className="text-lg font-bold text-gray-800 mb-6">
+                  <div className="lg:col-span-2 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 h-[400px]">
+                    <h2 className="text-lg font-bold text-gray-800 dark:text-white mb-6">
                       Tendencia Anual
                     </h2>
                     <ResponsiveContainer width="100%" height="90%">
@@ -447,8 +449,8 @@ const DashboardHome = () => {
                   </div>
 
                   {/* Placeholder Pie Chart (needs category data) */}
-                  <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-[400px] w-full flex flex-col items-center justify-center text-center">
-                    <h2 className="text-lg font-bold text-gray-800 mb-2 w-full text-left">
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 h-[400px] w-full flex flex-col items-center justify-center text-center">
+                    <h2 className="text-lg font-bold text-gray-800 dark:text-white mb-2 w-full text-left">
                       Gastos por Categoría
                     </h2>
                     <div className="flex-1 w-full flex items-center justify-center min-h-[200px]">
@@ -466,9 +468,9 @@ const DashboardHome = () => {
                 {/* Dashboard Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                   {/* Recent Transactions */}
-                  <div className="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                  <div className="lg:col-span-2 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
                     <div className="flex justify-between items-center mb-6">
-                      <h2 className="text-xl font-bold text-gray-800">
+                      <h2 className="text-xl font-bold text-gray-800 dark:text-white">
                         Transacciones Recientes
                       </h2>
                       <button
@@ -485,7 +487,7 @@ const DashboardHome = () => {
                         transactions.slice(0, 5).map((t) => (
                           <div
                             key={t.id}
-                            className="flex justify-between items-center p-4 hover:bg-gray-50 rounded-xl transition-colors border border-gray-100/50"
+                            className="flex justify-between items-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl transition-colors border border-gray-100/50 dark:border-gray-700"
                           >
                             <div className="flex items-center gap-4">
                               <div
@@ -501,8 +503,9 @@ const DashboardHome = () => {
                                   <TrendingUp className="w-5 h-5" />
                                 )}
                               </div>
+
                               <div>
-                                <p className="font-semibold text-gray-900">
+                                <p className="font-semibold text-gray-900 dark:text-white">
                                   {t.description}
                                 </p>
                                 <p className="text-xs text-gray-500">
@@ -513,8 +516,8 @@ const DashboardHome = () => {
                             <span
                               className={`font-bold ${
                                 t.type === "income"
-                                  ? "text-emerald-600"
-                                  : "text-gray-900"
+                                  ? "text-emerald-600 dark:text-emerald-400"
+                                  : "text-gray-900 dark:text-gray-100"
                               }`}
                             >
                               {t.type === "expense" ? "-" : "+"}€

@@ -77,18 +77,18 @@ const ProfileView = () => {
       {/* Encabezado */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-gray-900 flex items-center gap-3">
-            <User className="w-8 h-8 text-emerald-600" />
+          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white flex items-center gap-3">
+            <User className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
             Mi Perfil
           </h1>
-          <p className="text-gray-500 mt-2">
+          <p className="text-gray-500 dark:text-gray-400 mt-2">
             Gestiona tu información personal y preferencias
           </p>
         </div>
       </div>
 
       {/* Tarjeta Principal de Perfil */}
-      <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700">
         <div className="h-32 bg-gradient-to-r from-emerald-500 to-teal-400"></div>
         <div className="px-8 pb-8">
           <div className="relative flex justify-between items-end -mt-12 mb-6">
@@ -138,22 +138,24 @@ const ProfileView = () => {
           </div>
 
           <div className="space-y-1">
-            <h2 className="text-2xl font-bold text-gray-900">{user?.name}</h2>
-            <p className="text-gray-500 font-medium flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+              {user?.name}
+            </h2>
+            <p className="text-gray-500 dark:text-gray-400 font-medium flex items-center gap-2">
               <Mail className="w-4 h-4" /> {user?.email}
             </p>
           </div>
         </div>
       </div>
 
-      <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-100 dark:border-gray-700">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
           Información de la cuenta
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Nombre Completo
             </label>
             <input
@@ -161,11 +163,11 @@ const ProfileView = () => {
               name="name"
               value={formData.name}
               onChange={handleInputChange}
-              className="w-full rounded-lg border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
+              className="w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Email
             </label>
             <input
@@ -173,11 +175,11 @@ const ProfileView = () => {
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              className="w-full rounded-lg border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
+              className="w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Teléfono
             </label>
             <input
@@ -185,11 +187,11 @@ const ProfileView = () => {
               name="phone"
               value={formData.phone}
               onChange={handleInputChange}
-              className="w-full rounded-lg border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
+              className="w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               País
             </label>
             <input
@@ -197,11 +199,11 @@ const ProfileView = () => {
               name="country"
               value={formData.country}
               onChange={handleInputChange}
-              className="w-full rounded-lg border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
+              className="w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             />
           </div>
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Dirección
             </label>
             <input
@@ -209,11 +211,11 @@ const ProfileView = () => {
               name="address"
               value={formData.address}
               onChange={handleInputChange}
-              className="w-full rounded-lg border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
+              className="w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Ingreso Mensual
             </label>
             <input
@@ -221,11 +223,11 @@ const ProfileView = () => {
               name="monthly_income"
               value={formData.monthly_income}
               onChange={handleInputChange}
-              className="w-full rounded-lg border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
+              className="w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Moneda
             </label>
             <input
@@ -233,7 +235,7 @@ const ProfileView = () => {
               name="currency"
               value={formData.currency}
               onChange={handleInputChange}
-              className="w-full rounded-lg border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
+              className="w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             />
           </div>
         </div>
