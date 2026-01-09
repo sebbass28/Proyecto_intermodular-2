@@ -44,14 +44,14 @@ const BudgetModal = ({
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 animate-in fade-in zoom-in-95 duration-200">
-        <h2 className="text-xl font-bold text-gray-800 mb-6">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-md p-6 animate-in fade-in zoom-in-95 duration-200 border border-gray-100 dark:border-gray-700">
+        <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-6">
           {initialData ? "Editar Presupuesto" : "Nuevo Presupuesto"}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Categoría
             </label>
             <select
@@ -60,7 +60,7 @@ const BudgetModal = ({
               onChange={(e) =>
                 setFormData({ ...formData, category_id: e.target.value })
               }
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all bg-white"
+              className="input"
             >
               <option value="">Selecciona una categoría</option>
               {categories.map((c) => (
@@ -72,7 +72,7 @@ const BudgetModal = ({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Límite
             </label>
             <div className="relative">
@@ -87,14 +87,14 @@ const BudgetModal = ({
                 onChange={(e) =>
                   setFormData({ ...formData, limit_amount: e.target.value })
                 }
-                className="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
+                className="input pl-8"
                 placeholder="0.00"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Periodo
             </label>
             <select
@@ -102,7 +102,7 @@ const BudgetModal = ({
               onChange={(e) =>
                 setFormData({ ...formData, period: e.target.value })
               }
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all bg-white"
+              className="input"
             >
               <option value="monthly">Mensual</option>
               <option value="weekly">Semanal</option>
@@ -114,7 +114,7 @@ const BudgetModal = ({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors"
+              className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
             >
               Cancelar
             </button>
@@ -188,10 +188,10 @@ const BudgetsView = () => {
     <div className="space-y-6 pb-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-gray-900">
+          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">
             Presupuestos
           </h1>
-          <p className="text-gray-500 mt-1">
+          <p className="text-gray-500 dark:text-gray-400 mt-1">
             Controla tus gastos por categoría
           </p>
         </div>
@@ -210,47 +210,49 @@ const BudgetsView = () => {
             Cargando presupuestos...
           </p>
         ) : budgets.length === 0 ? (
-          <div className="col-span-full text-center py-12 bg-white rounded-xl border border-dashed border-gray-300">
-            <TrendingUp className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-            <p className="text-gray-500">No tienes presupuestos definidos.</p>
+          <div className="col-span-full text-center py-12 bg-white dark:bg-gray-800 rounded-xl border border-dashed border-gray-300 dark:border-gray-700">
+            <TrendingUp className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
+            <p className="text-gray-500 dark:text-gray-400">
+              No tienes presupuestos definidos.
+            </p>
           </div>
         ) : (
           budgets.map((b) => (
             <div
               key={b.id}
-              className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow relative group"
+              className="card relative group hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-emerald-900/20"
             >
               <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button
                   onClick={() => openEdit(b)}
-                  className="p-1.5 text-gray-400 hover:text-blue-500 bg-gray-50 rounded-lg"
+                  className="p-1.5 text-gray-400 hover:text-blue-500 bg-gray-50 dark:bg-gray-700 rounded-lg"
                 >
                   <Edit className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => handleDelete(b.id)}
-                  className="p-1.5 text-gray-400 hover:text-red-500 bg-gray-50 rounded-lg"
+                  className="p-1.5 text-gray-400 hover:text-red-500 bg-gray-50 dark:bg-gray-700 rounded-lg"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
               <div className="mb-4">
-                <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full uppercase tracking-wide">
+                <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-1 rounded-full uppercase tracking-wide">
                   {b.period === "monthly" ? "Mensual" : b.period}
                 </span>
               </div>
-              <h3 className="text-lg font-bold text-gray-800 mb-1">
+              <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-1">
                 {getCategoryName(b.category_id)}
               </h3>
-              <p className="text-3xl font-extrabold text-gray-900 mb-4">
+              <p className="text-3xl font-extrabold text-gray-900 dark:text-white mb-4">
                 €{Number(b.limit_amount).toLocaleString()}
               </p>
 
               {/* Progress bar placeholder (requires transaction data integration for real progress) */}
-              <div className="w-full bg-gray-100 rounded-full h-2 mb-2 overflow-hidden">
+              <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2 mb-2 overflow-hidden">
                 <div className="bg-emerald-500 h-2 rounded-full w-[0%]"></div>
               </div>
-              <p className="text-xs text-gray-500 text-right">
+              <p className="text-xs text-gray-500 dark:text-gray-400 text-right">
                 0% gastado (Integración pendiente)
               </p>
             </div>

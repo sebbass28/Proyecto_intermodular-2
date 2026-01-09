@@ -56,14 +56,14 @@ const AccountModal = ({ isOpen, onClose, onSubmit, initialData }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 animate-in fade-in zoom-in-95 duration-200">
-        <h2 className="text-xl font-bold text-gray-800 mb-6">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-md p-6 animate-in fade-in zoom-in-95 duration-200 border border-gray-100 dark:border-gray-700">
+        <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-6">
           {initialData ? "Editar Cuenta" : "Nueva Cuenta"}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Nombre de la cuenta
             </label>
             <input
@@ -73,14 +73,14 @@ const AccountModal = ({ isOpen, onClose, onSubmit, initialData }) => {
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none"
+              className="input"
               placeholder="Ej: Billetera Principal"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Tipo
               </label>
               <select
@@ -88,7 +88,7 @@ const AccountModal = ({ isOpen, onClose, onSubmit, initialData }) => {
                 onChange={(e) =>
                   setFormData({ ...formData, type: e.target.value })
                 }
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none bg-white"
+                className="input"
               >
                 <option value="cash">Efectivo</option>
                 <option value="bank">Banco</option>
@@ -98,7 +98,7 @@ const AccountModal = ({ isOpen, onClose, onSubmit, initialData }) => {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Moneda
               </label>
               <select
@@ -106,7 +106,7 @@ const AccountModal = ({ isOpen, onClose, onSubmit, initialData }) => {
                 onChange={(e) =>
                   setFormData({ ...formData, currency: e.target.value })
                 }
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none bg-white"
+                className="input"
               >
                 <option value="EUR">Euro (€)</option>
                 <option value="USD">Dólar ($)</option>
@@ -116,7 +116,7 @@ const AccountModal = ({ isOpen, onClose, onSubmit, initialData }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Saldo {initialData ? "Actual" : "Inicial"}
             </label>
             <input
@@ -127,7 +127,7 @@ const AccountModal = ({ isOpen, onClose, onSubmit, initialData }) => {
               onChange={(e) =>
                 setFormData({ ...formData, initial_balance: e.target.value })
               }
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none"
+              className="input"
               placeholder="0.00"
             />
           </div>
@@ -136,7 +136,7 @@ const AccountModal = ({ isOpen, onClose, onSubmit, initialData }) => {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors"
+              className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
             >
               Cancelar
             </button>
@@ -173,15 +173,15 @@ const TransferModal = ({ isOpen, onClose, onSubmit, accounts }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 animate-in fade-in zoom-in-95 duration-200">
-        <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-          <ArrowRightLeft className="w-5 h-5 text-emerald-600" />
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-md p-6 animate-in fade-in zoom-in-95 duration-200 border border-gray-100 dark:border-gray-700">
+        <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-2">
+          <ArrowRightLeft className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
           Nueva Transferencia
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Desde (Origen)
             </label>
             <select
@@ -190,7 +190,7 @@ const TransferModal = ({ isOpen, onClose, onSubmit, accounts }) => {
               onChange={(e) =>
                 setFormData({ ...formData, from_account_id: e.target.value })
               }
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none bg-white"
+              className="input"
             >
               <option value="">Selecciona cuenta origen</option>
               {accounts.map((acc) => (
@@ -202,7 +202,7 @@ const TransferModal = ({ isOpen, onClose, onSubmit, accounts }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Hacia (Destino)
             </label>
             <select
@@ -211,7 +211,7 @@ const TransferModal = ({ isOpen, onClose, onSubmit, accounts }) => {
               onChange={(e) =>
                 setFormData({ ...formData, to_account_id: e.target.value })
               }
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none bg-white"
+              className="input"
             >
               <option value="">Selecciona cuenta destino</option>
               {accounts
@@ -225,7 +225,7 @@ const TransferModal = ({ isOpen, onClose, onSubmit, accounts }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Monto
             </label>
             <input
@@ -236,13 +236,13 @@ const TransferModal = ({ isOpen, onClose, onSubmit, accounts }) => {
               onChange={(e) =>
                 setFormData({ ...formData, amount: e.target.value })
               }
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none"
+              className="input"
               placeholder="0.00"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Descripción (Opcional)
             </label>
             <input
@@ -251,7 +251,7 @@ const TransferModal = ({ isOpen, onClose, onSubmit, accounts }) => {
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
               }
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none"
+              className="input"
               placeholder="Ej: Ahorro mensual"
             />
           </div>
@@ -260,7 +260,7 @@ const TransferModal = ({ isOpen, onClose, onSubmit, accounts }) => {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors"
+              className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
             >
               Cancelar
             </button>
@@ -355,10 +355,12 @@ const AccountsView = () => {
     <div className="space-y-6 pb-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-gray-900">
+          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">
             Cuentas y Carteras
           </h1>
-          <p className="text-gray-500 mt-1">Gestiona tus fuentes de dinero</p>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">
+            Gestiona tus fuentes de dinero
+          </p>
         </div>
         <div className="flex gap-2">
           <button
@@ -379,13 +381,13 @@ const AccountsView = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-4 border-b border-gray-200">
+      <div className="flex gap-4 border-b border-gray-200 dark:border-gray-700">
         <button
           onClick={() => setActiveTab("accounts")}
           className={`py-2 px-4 font-medium transition-colors border-b-2 ${
             activeTab === "accounts"
-              ? "border-emerald-500 text-emerald-600"
-              : "border-transparent text-gray-500 hover:text-emerald-500"
+              ? "border-emerald-500 text-emerald-600 dark:text-emerald-400"
+              : "border-transparent text-gray-500 dark:text-gray-400 hover:text-emerald-500 dark:hover:text-emerald-400"
           }`}
         >
           Mis Cuentas
@@ -394,8 +396,8 @@ const AccountsView = () => {
           onClick={() => setActiveTab("transfers")}
           className={`py-2 px-4 font-medium transition-colors border-b-2 ${
             activeTab === "transfers"
-              ? "border-emerald-500 text-emerald-600"
-              : "border-transparent text-gray-500 hover:text-emerald-500"
+              ? "border-emerald-500 text-emerald-600 dark:text-emerald-400"
+              : "border-transparent text-gray-500 dark:text-gray-400 hover:text-emerald-500 dark:hover:text-emerald-400"
           }`}
         >
           Historial de Transferencias
@@ -410,9 +412,11 @@ const AccountsView = () => {
               Cargando cuentas...
             </p>
           ) : accounts.length === 0 ? (
-            <div className="col-span-full text-center py-12 bg-white rounded-xl border border-dashed border-gray-300">
-              <Wallet className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-              <p className="text-gray-500">No tienes cuentas registradas.</p>
+            <div className="col-span-full text-center py-12 bg-white dark:bg-gray-800 rounded-xl border border-dashed border-gray-300 dark:border-gray-700">
+              <Wallet className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
+              <p className="text-gray-500 dark:text-gray-400">
+                No tienes cuentas registradas.
+              </p>
             </div>
           ) : (
             accounts.map((acc) => {
@@ -420,7 +424,7 @@ const AccountsView = () => {
               return (
                 <div
                   key={acc.id}
-                  className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all group relative overflow-hidden"
+                  className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md dark:shadow-none dark:bg-gray-800/80 transition-all group relative overflow-hidden"
                 >
                   <div
                     className="absolute top-0 left-0 w-2 h-full opacity-60"
@@ -429,33 +433,37 @@ const AccountsView = () => {
                   <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
                     <button
                       onClick={() => openEdit(acc)}
-                      className="p-1.5 text-gray-400 hover:text-blue-500 bg-gray-50 rounded-lg"
+                      className="p-1.5 text-gray-400 hover:text-blue-500 bg-gray-50 dark:bg-gray-700 rounded-lg"
                     >
                       <Edit className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => handleDelete(acc.id)}
-                      className="p-1.5 text-gray-400 hover:text-red-500 bg-gray-50 rounded-lg"
+                      className="p-1.5 text-gray-400 hover:text-red-500 bg-gray-50 dark:bg-gray-700 rounded-lg"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
 
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="p-3 bg-gray-50 rounded-xl text-gray-600">
+                    <div className="p-3 bg-gray-50 dark:bg-gray-700 rounded-xl text-gray-600 dark:text-gray-300">
                       <Icon className="w-6 h-6" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-gray-800">{acc.name}</h3>
-                      <p className="text-xs text-gray-500 uppercase">
+                      <h3 className="font-bold text-gray-800 dark:text-white">
+                        {acc.name}
+                      </h3>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 uppercase">
                         {acc.type.replace("_", " ")}
                       </p>
                     </div>
                   </div>
 
                   <div className="mt-4">
-                    <p className="text-sm text-gray-500">Saldo Actual</p>
-                    <p className="text-2xl font-extrabold text-gray-900">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Saldo Actual
+                    </p>
+                    <p className="text-2xl font-extrabold text-gray-900 dark:text-white">
                       {acc.currency === "EUR" ? "€" : "$"}{" "}
                       {Number(acc.balance).toLocaleString()}
                     </p>
@@ -466,50 +474,56 @@ const AccountsView = () => {
           )}
         </div>
       ) : (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
           <table className="w-full">
-            <thead className="bg-gray-50/50 border-b border-gray-100">
+            <thead className="bg-gray-50/50 dark:bg-gray-700/50 border-b border-gray-100 dark:border-gray-700">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
                   Fecha
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
                   Origen
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
                   Destino
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
                   Descripción
                 </th>
-                <th className="px-6 py-4 text-right text-xs font-semibold text-gray-500 uppercase">
+                <th className="px-6 py-4 text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
                   Monto
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-gray-50 dark:divide-gray-700">
               {transfers.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="p-8 text-center text-gray-500">
+                  <td
+                    colSpan="5"
+                    className="p-8 text-center text-gray-500 dark:text-gray-400"
+                  >
                     No hay transferencias registradas
                   </td>
                 </tr>
               ) : (
                 transfers.map((t) => (
-                  <tr key={t.id} className="hover:bg-gray-50/50">
-                    <td className="px-6 py-4 text-sm text-gray-500">
+                  <tr
+                    key={t.id}
+                    className="hover:bg-gray-50/50 dark:hover:bg-gray-700/30"
+                  >
+                    <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
                       {new Date(t.created_at).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4 text-sm font-medium text-gray-800">
+                    <td className="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">
                       {t.from_account_name}
                     </td>
-                    <td className="px-6 py-4 text-sm font-medium text-gray-800">
+                    <td className="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">
                       {t.to_account_name}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">
+                    <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
                       {t.description || "-"}
                     </td>
-                    <td className="px-6 py-4 text-right font-bold text-gray-900">
+                    <td className="px-6 py-4 text-right font-bold text-gray-900 dark:text-white">
                       {Number(t.amount).toLocaleString()}
                     </td>
                   </tr>
