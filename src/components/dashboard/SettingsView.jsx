@@ -21,6 +21,7 @@ const SettingsView = () => {
     disable2FA,
     getSessions,
     revokeSession,
+    logout,
   } = useAuthStore();
 
   const [passwords, setPasswords] = useState({
@@ -99,9 +100,23 @@ const SettingsView = () => {
   };
 
   const handleRevokeSession = async (sessionId) => {
-    if (window.confirm("¿Cerrar sesión en este dispositivo?")) {
+    const currentSessionId = localStorage.getItem("current_session_id");
+    const isCurrent =
+      currentSessionId && sessionId.toString() === currentSessionId.toString();
+
+    if (
+      window.confirm(
+        isCurrent
+          ? "¿Quieres cerrar tu sesión actual?"
+          : "¿Cerrar sesión en este dispositivo?"
+      )
+    ) {
       await revokeSession(sessionId);
-      fetchSessions();
+      if (isCurrent) {
+        logout();
+      } else {
+        fetchSessions();
+      }
     }
   };
 
@@ -371,11 +386,19 @@ const SettingsView = () => {
           ) : (
             sessions.map((session) => {
               const info = parseDeviceInfo(session.device_info);
-              const isCurrent = false; // Could check ID if backend returned current session ID match
+              const currentSessionId =
+                localStorage.getItem("current_session_id");
+              const isCurrent =
+                currentSessionId &&
+                session.id.toString() === currentSessionId.toString();
               return (
                 <div
                   key={session.id}
-                  className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg gap-4"
+                  className={`flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-lg gap-4 ${
+                    isCurrent
+                      ? "bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-900/30"
+                      : "bg-gray-50 dark:bg-gray-700/50"
+                  }`}
                 >
                   <div className="flex items-center gap-4">
                     {info.device.type === "mobile" ? (
@@ -386,6 +409,11 @@ const SettingsView = () => {
                     <div>
                       <p className="font-semibold text-gray-900 dark:text-white">
                         {info.browser} en {info.os}
+                        {isCurrent && (
+                          <span className="ml-2 text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-400 px-2 py-0.5 rounded-full font-medium">
+                            Actual
+                          </span>
+                        )}
                       </p>
                       <p className="text-xs text-gray-500 dark:text-gray-400 flex flex-col gap-1">
                         <span>IP: {session.ip_address}</span>
