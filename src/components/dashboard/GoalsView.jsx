@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Plus, Target, Trash2, Edit2, TrendingUp } from 'lucide-react';
-import api from '../../api/api';
+import { useState, useEffect } from "react";
+import { Plus, Target, Trash2, Edit2, TrendingUp } from "lucide-react";
+import api from "../../api/api";
 
 export default function GoalsView() {
   const [goals, setGoals] = useState([]);
@@ -10,12 +10,12 @@ export default function GoalsView() {
 
   // Form state
   const [formData, setFormData] = useState({
-    name: '',
-    targetAmount: '',
-    currentAmount: '',
-    deadline: '',
-    icon: '🎯',
-    color: '#3B82F6',
+    name: "",
+    targetAmount: "",
+    currentAmount: "",
+    deadline: "",
+    icon: "🎯",
+    color: "#3B82F6",
   });
 
   useEffect(() => {
@@ -25,11 +25,11 @@ export default function GoalsView() {
   const loadGoals = async () => {
     try {
       setLoading(true);
-      const response = await api.get('/goals');
+      const response = await api.get("/goals");
       // Asegurarse de que siempre sea un array
       setGoals(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
-      console.error('Error cargando metas:', error);
+      console.error("Error cargando metas:", error);
       // En caso de error, establecer un array vacío
       setGoals([]);
     } finally {
@@ -41,7 +41,7 @@ export default function GoalsView() {
     e.preventDefault();
 
     if (!formData.name || !formData.targetAmount || !formData.deadline) {
-      alert('Por favor completa todos los campos requeridos');
+      alert("Por favor completa todos los campos requeridos");
       return;
     }
 
@@ -49,7 +49,9 @@ export default function GoalsView() {
       const goalData = {
         name: formData.name,
         targetAmount: parseFloat(formData.targetAmount),
-        currentAmount: formData.currentAmount ? parseFloat(formData.currentAmount) : 0,
+        currentAmount: formData.currentAmount
+          ? parseFloat(formData.currentAmount)
+          : 0,
         deadline: formData.deadline,
         icon: formData.icon,
         color: formData.color,
@@ -57,17 +59,17 @@ export default function GoalsView() {
 
       if (editingGoal) {
         await api.put(`/goals/${editingGoal.id}`, goalData);
-        alert('Meta actualizada exitosamente');
+        alert("Meta actualizada exitosamente");
       } else {
-        await api.post('/goals', goalData);
-        alert('Meta creada exitosamente');
+        await api.post("/goals", goalData);
+        alert("Meta creada exitosamente");
       }
 
       loadGoals();
       closeDialog();
     } catch (error) {
-      console.error('Error guardando meta:', error);
-      alert(error.response?.data?.message || 'Error al guardar la meta');
+      console.error("Error guardando meta:", error);
+      alert(error.response?.data?.message || "Error al guardar la meta");
     }
   };
 
@@ -77,7 +79,7 @@ export default function GoalsView() {
       name: goal.name,
       targetAmount: goal.targetAmount.toString(),
       currentAmount: goal.currentAmount.toString(),
-      deadline: goal.deadline.split('T')[0],
+      deadline: goal.deadline.split("T")[0],
       icon: goal.icon,
       color: goal.color,
     });
@@ -85,20 +87,20 @@ export default function GoalsView() {
   };
 
   const handleDelete = async (id) => {
-    if (!confirm('¿Estás seguro de eliminar esta meta?')) return;
+    if (!confirm("¿Estás seguro de eliminar esta meta?")) return;
 
     try {
       await api.delete(`/goals/${id}`);
-      alert('Meta eliminada exitosamente');
+      alert("Meta eliminada exitosamente");
       loadGoals();
     } catch (error) {
-      console.error('Error eliminando meta:', error);
-      alert('Error al eliminar la meta');
+      console.error("Error eliminando meta:", error);
+      alert("Error al eliminar la meta");
     }
   };
 
   const handleAddFunds = async (goalId, amount) => {
-    const goal = goals.find(g => g.id === goalId);
+    const goal = goals.find((g) => g.id === goalId);
     if (!goal) return;
 
     try {
@@ -108,8 +110,8 @@ export default function GoalsView() {
       alert(`$${amount} agregados a ${goal.name}`);
       loadGoals();
     } catch (error) {
-      console.error('Error agregando fondos:', error);
-      alert('Error al agregar fondos');
+      console.error("Error agregando fondos:", error);
+      alert("Error al agregar fondos");
     }
   };
 
@@ -117,12 +119,12 @@ export default function GoalsView() {
     setIsDialogOpen(false);
     setEditingGoal(null);
     setFormData({
-      name: '',
-      targetAmount: '',
-      currentAmount: '',
-      deadline: '',
-      icon: '🎯',
-      color: '#3B82F6',
+      name: "",
+      targetAmount: "",
+      currentAmount: "",
+      deadline: "",
+      icon: "🎯",
+      color: "#3B82F6",
     });
   };
 
@@ -138,16 +140,27 @@ export default function GoalsView() {
     return diffDays;
   };
 
-  const totalTargetAmount = goals.reduce((sum, goal) => sum + goal.targetAmount, 0);
-  const totalCurrentAmount = goals.reduce((sum, goal) => sum + goal.currentAmount, 0);
-  const overallProgress = totalTargetAmount > 0 ? (totalCurrentAmount / totalTargetAmount) * 100 : 0;
+  const totalTargetAmount = goals.reduce(
+    (sum, goal) => sum + goal.targetAmount,
+    0
+  );
+  const totalCurrentAmount = goals.reduce(
+    (sum, goal) => sum + goal.currentAmount,
+    0
+  );
+  const overallProgress =
+    totalTargetAmount > 0 ? (totalCurrentAmount / totalTargetAmount) * 100 : 0;
 
   return (
     <div className="p-8">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold mb-2">Metas Financieras</h1>
-          <p className="text-gray-600">Define y alcanza tus objetivos financieros</p>
+          <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-white">
+            Metas Financieras
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400">
+            Define y alcanza tus objetivos financieros
+          </p>
         </div>
         <button
           onClick={() => setIsDialogOpen(true)}
@@ -160,37 +173,58 @@ export default function GoalsView() {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="card">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 mb-1">Meta Total</p>
-              <p className="text-2xl font-bold">${totalTargetAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                Meta Total
+              </p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                $
+                {totalTargetAmount.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                })}
+              </p>
             </div>
-            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-              <Target className="w-6 h-6 text-blue-600" />
+            <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+              <Target className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="card">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 mb-1">Ahorrado</p>
-              <p className="text-2xl font-bold text-green-600">${totalCurrentAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                Ahorrado
+              </p>
+              <p className="text-2xl font-bold text-green-600 dark:text-green-400">
+                $
+                {totalCurrentAmount.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                })}
+              </p>
             </div>
-            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-              <TrendingUp className="w-6 h-6 text-green-600" />
+            <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+              <TrendingUp className="w-6 h-6 text-green-600 dark:text-green-400" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="card">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 mb-1">Progreso General</p>
-              <p className="text-2xl font-bold">{overallProgress.toFixed(1)}%</p>
-              <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${overallProgress}%` }}></div>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                Progreso General
+              </p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                {overallProgress.toFixed(1)}%
+              </p>
+              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-2">
+                <div
+                  className="bg-blue-600 h-2 rounded-full"
+                  style={{ width: `${overallProgress}%` }}
+                ></div>
               </div>
             </div>
           </div>
@@ -198,8 +232,10 @@ export default function GoalsView() {
       </div>
 
       {/* Goals List */}
-      <div className="bg-white p-6 rounded-lg shadow">
-        <h2 className="text-xl font-bold mb-6">Mis Metas</h2>
+      <div className="card">
+        <h2 className="text-xl font-bold mb-6 text-gray-900 dark:text-white">
+          Mis Metas
+        </h2>
 
         {loading ? (
           <div className="text-center py-8">
@@ -209,10 +245,12 @@ export default function GoalsView() {
         ) : goals.length === 0 ? (
           <div className="text-center py-12">
             <div className="text-6xl mb-4">🎯</div>
-            <p className="text-gray-600 mb-4">No tienes metas aún</p>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              No tienes metas aún
+            </p>
             <button
               onClick={() => setIsDialogOpen(true)}
-              className="border border-gray-300 px-4 py-2 rounded-lg hover:bg-gray-50"
+              className="border border-gray-300 dark:border-gray-600 px-4 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
             >
               Agregar Primera Meta
             </button>
@@ -220,14 +258,17 @@ export default function GoalsView() {
         ) : (
           <div className="space-y-4">
             {goals.map((goal) => {
-              const progress = calculateProgress(goal.currentAmount, goal.targetAmount);
+              const progress = calculateProgress(
+                goal.currentAmount,
+                goal.targetAmount
+              );
               const daysRemaining = calculateDaysRemaining(goal.deadline);
               const isCompleted = progress >= 100;
 
               return (
                 <div
                   key={goal.id}
-                  className="p-6 rounded-lg border hover:shadow-md transition-shadow"
+                  className="p-6 rounded-lg border border-gray-100 dark:border-gray-700 hover:shadow-md dark:shadow-none dark:bg-gray-800/50 transition-shadow"
                   style={{ borderLeft: `4px solid ${goal.color}` }}
                 >
                   <div className="flex items-start justify-between mb-4">
@@ -240,25 +281,33 @@ export default function GoalsView() {
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
-                          <h3 className="text-lg font-semibold">{goal.name}</h3>
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                            {goal.name}
+                          </h3>
                           {isCompleted && (
-                            <span className="text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full">
+                            <span className="text-xs px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full">
                               ✓ Completada
                             </span>
                           )}
                         </div>
-                        <div className="flex gap-4 text-sm text-gray-600">
+                        <div className="flex gap-4 text-sm text-gray-600 dark:text-gray-400">
                           <span>
-                            ${goal.currentAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })} / ${goal.targetAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                            $
+                            {goal.currentAmount.toLocaleString("en-US", {
+                              minimumFractionDigits: 2,
+                            })}{" "}
+                            / $
+                            {goal.targetAmount.toLocaleString("en-US", {
+                              minimumFractionDigits: 2,
+                            })}
                           </span>
                           <span>•</span>
                           <span>
                             {daysRemaining > 0
                               ? `${daysRemaining} días restantes`
                               : daysRemaining === 0
-                              ? 'Vence hoy'
-                              : `Venció hace ${Math.abs(daysRemaining)} días`
-                            }
+                              ? "Vence hoy"
+                              : `Venció hace ${Math.abs(daysRemaining)} días`}
                           </span>
                         </div>
                       </div>
@@ -267,13 +316,13 @@ export default function GoalsView() {
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleEdit(goal)}
-                        className="p-2 text-blue-600 hover:bg-blue-50 rounded"
+                        className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded"
                       >
                         <Edit2 className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => handleDelete(goal.id)}
-                        className="p-2 text-red-600 hover:bg-red-50 rounded"
+                        className="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -282,13 +331,23 @@ export default function GoalsView() {
 
                   <div className="mb-4">
                     <div className="flex justify-between text-sm mb-2">
-                      <span className="text-gray-600">Progreso</span>
-                      <span style={{ color: goal.color }} className="font-semibold">{progress.toFixed(1)}%</span>
+                      <span className="text-gray-600 dark:text-gray-400">
+                        Progreso
+                      </span>
+                      <span
+                        style={{ color: goal.color }}
+                        className="font-semibold"
+                      >
+                        {progress.toFixed(1)}%
+                      </span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-3">
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                       <div
                         className="h-3 rounded-full"
-                        style={{ width: `${progress}%`, backgroundColor: goal.color }}
+                        style={{
+                          width: `${progress}%`,
+                          backgroundColor: goal.color,
+                        }}
                       ></div>
                     </div>
                   </div>
@@ -297,24 +356,24 @@ export default function GoalsView() {
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleAddFunds(goal.id, 100)}
-                        className="flex-1 px-3 py-2 text-sm border rounded hover:bg-gray-50"
+                        className="flex-1 px-3 py-2 text-sm border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-700"
                       >
                         + $100
                       </button>
                       <button
                         onClick={() => handleAddFunds(goal.id, 500)}
-                        className="flex-1 px-3 py-2 text-sm border rounded hover:bg-gray-50"
+                        className="flex-1 px-3 py-2 text-sm border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-700"
                       >
                         + $500
                       </button>
                       <button
                         onClick={() => {
-                          const amount = prompt('¿Cuánto quieres agregar?');
+                          const amount = prompt("¿Cuánto quieres agregar?");
                           if (amount && !isNaN(parseFloat(amount))) {
                             handleAddFunds(goal.id, parseFloat(amount));
                           }
                         }}
-                        className="flex-1 px-3 py-2 text-sm border rounded hover:bg-gray-50"
+                        className="flex-1 px-3 py-2 text-sm border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-700"
                       >
                         + Personalizado
                       </button>
@@ -329,89 +388,118 @@ export default function GoalsView() {
 
       {/* Create/Edit Dialog */}
       {isDialogOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h2 className="text-2xl font-bold mb-2">
-              {editingGoal ? 'Editar Meta' : 'Nueva Meta'}
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4 border border-gray-100 dark:border-gray-700 shadow-xl">
+            <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">
+              {editingGoal ? "Editar Meta" : "Nueva Meta"}
             </h2>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
               {editingGoal
-                ? 'Actualiza los detalles de tu meta financiera'
-                : 'Define una nueva meta financiera'}
+                ? "Actualiza los detalles de tu meta financiera"
+                : "Define una nueva meta financiera"}
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-1">Nombre de la Meta *</label>
+                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                  Nombre de la Meta *
+                </label>
                 <input
                   type="text"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   placeholder="ej: Casa Nueva, Vacaciones"
-                  className="w-full px-3 py-2 border rounded-lg"
+                  className="input"
                   required
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1">Meta ($) *</label>
+                  <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                    Meta ($) *
+                  </label>
                   <input
                     type="number"
                     step="0.01"
                     value={formData.targetAmount}
-                    onChange={(e) => setFormData({ ...formData, targetAmount: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, targetAmount: e.target.value })
+                    }
                     placeholder="50000"
-                    className="w-full px-3 py-2 border rounded-lg"
+                    className="input"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1">Ahorrado ($)</label>
+                  <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                    Ahorrado ($)
+                  </label>
                   <input
                     type="number"
                     step="0.01"
                     value={formData.currentAmount}
-                    onChange={(e) => setFormData({ ...formData, currentAmount: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        currentAmount: e.target.value,
+                      })
+                    }
                     placeholder="5000"
-                    className="w-full px-3 py-2 border rounded-lg"
+                    className="input"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1">Fecha Límite *</label>
+                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                  Fecha Límite *
+                </label>
                 <input
                   type="date"
                   value={formData.deadline}
-                  onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
-                  className="w-full px-3 py-2 border rounded-lg"
+                  onChange={(e) =>
+                    setFormData({ ...formData, deadline: e.target.value })
+                  }
+                  className="input"
                   required
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1">Icono</label>
+                  <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                    Icono
+                  </label>
                   <input
                     type="text"
                     value={formData.icon}
-                    onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, icon: e.target.value })
+                    }
                     placeholder="🎯"
                     maxLength={2}
-                    className="w-full px-3 py-2 border rounded-lg"
+                    className="input"
                   />
-                  <p className="text-xs text-gray-500 mt-1">Sugeridos: 🏠 ✈️ 🚗 💍 🎓 🛡️</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    Sugeridos: 🏠 ✈️ 🚗 💍 🎓 🛡️
+                  </p>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1">Color</label>
+                  <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                    Color
+                  </label>
                   <input
                     type="color"
                     value={formData.color}
-                    onChange={(e) => setFormData({ ...formData, color: e.target.value })}
-                    className="w-full h-10 px-1 py-1 border rounded-lg"
+                    onChange={(e) =>
+                      setFormData({ ...formData, color: e.target.value })
+                    }
+                    className="w-full h-10 px-1 py-1 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700"
                   />
                 </div>
               </div>
@@ -420,7 +508,7 @@ export default function GoalsView() {
                 <button
                   type="button"
                   onClick={closeDialog}
-                  className="flex-1 px-4 py-2 border rounded-lg hover:bg-gray-50"
+                  className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
                 >
                   Cancelar
                 </button>
@@ -428,7 +516,7 @@ export default function GoalsView() {
                   type="submit"
                   className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
                 >
-                  {editingGoal ? 'Actualizar' : 'Crear'} Meta
+                  {editingGoal ? "Actualizar" : "Crear"} Meta
                 </button>
               </div>
             </form>
@@ -438,4 +526,3 @@ export default function GoalsView() {
     </div>
   );
 }
-

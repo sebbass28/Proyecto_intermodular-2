@@ -43,14 +43,14 @@ const TransactionModal = ({ isOpen, onClose, onSubmit, initialData }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 animate-in fade-in zoom-in-95 duration-200">
-        <h2 className="text-xl font-bold text-gray-800 mb-6">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-md p-6 animate-in fade-in zoom-in-95 duration-200 border border-gray-100 dark:border-gray-700">
+        <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-6">
           {initialData ? "Editar Transacción" : "Nueva Transacción"}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Tipo
             </label>
             <div className="grid grid-cols-2 gap-4">
@@ -59,8 +59,8 @@ const TransactionModal = ({ isOpen, onClose, onSubmit, initialData }) => {
                 onClick={() => setFormData({ ...formData, type: "income" })}
                 className={`p-3 rounded-lg border text-center transition-colors ${
                   formData.type === "income"
-                    ? "bg-emerald-50 border-emerald-500 text-emerald-700 font-semibold"
-                    : "border-gray-200 text-gray-600 hover:bg-gray-50"
+                    ? "bg-emerald-50 dark:bg-emerald-900/40 border-emerald-500 text-emerald-700 dark:text-emerald-400 font-semibold"
+                    : "border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
                 }`}
               >
                 Ingreso
@@ -70,8 +70,8 @@ const TransactionModal = ({ isOpen, onClose, onSubmit, initialData }) => {
                 onClick={() => setFormData({ ...formData, type: "expense" })}
                 className={`p-3 rounded-lg border text-center transition-colors ${
                   formData.type === "expense"
-                    ? "bg-red-50 border-red-500 text-red-700 font-semibold"
-                    : "border-gray-200 text-gray-600 hover:bg-gray-50"
+                    ? "bg-red-50 dark:bg-red-900/40 border-red-500 text-red-700 dark:text-red-400 font-semibold"
+                    : "border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
                 }`}
               >
                 Gasto
@@ -80,7 +80,7 @@ const TransactionModal = ({ isOpen, onClose, onSubmit, initialData }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Monto
             </label>
             <div className="relative">
@@ -95,14 +95,14 @@ const TransactionModal = ({ isOpen, onClose, onSubmit, initialData }) => {
                 onChange={(e) =>
                   setFormData({ ...formData, amount: e.target.value })
                 }
-                className="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
+                className="input pl-8"
                 placeholder="0.00"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Descripción
             </label>
             <input
@@ -112,13 +112,13 @@ const TransactionModal = ({ isOpen, onClose, onSubmit, initialData }) => {
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
               }
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
+              className="input"
               placeholder="Ej: Compra supermercado"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Fecha
             </label>
             <input
@@ -128,7 +128,7 @@ const TransactionModal = ({ isOpen, onClose, onSubmit, initialData }) => {
               onChange={(e) =>
                 setFormData({ ...formData, date: e.target.value })
               }
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
+              className="input"
             />
           </div>
 
@@ -136,7 +136,7 @@ const TransactionModal = ({ isOpen, onClose, onSubmit, initialData }) => {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors"
+              className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
             >
               Cancelar
             </button>
@@ -208,10 +208,12 @@ const TransactionsView = () => {
     <div className="space-y-6 pb-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-gray-900">
+          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">
             Transacciones
           </h1>
-          <p className="text-gray-500 mt-1">Gestiona tus ingresos y gastos</p>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">
+            Gestiona tus ingresos y gastos
+          </p>
         </div>
         <button
           onClick={openCreate}
@@ -223,15 +225,15 @@ const TransactionsView = () => {
       </div>
 
       {/* Filters */}
-      <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex gap-2 overflow-x-auto">
+      <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 flex gap-2 overflow-x-auto">
         {["all", "income", "expense"].map((type) => (
           <button
             key={type}
             onClick={() => setFilterType(type)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
               filterType === type
-                ? "bg-emerald-100 text-emerald-800"
-                : "text-gray-500 hover:bg-gray-50"
+                ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300"
+                : "text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
             }`}
           >
             {type === "all"
@@ -243,12 +245,12 @@ const TransactionsView = () => {
         ))}
       </div>
 
-      <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+      <div className="card p-0 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50/50 border-b border-gray-100">
+            <thead className="bg-gray-50/50 dark:bg-gray-700/50 border-b border-gray-100 dark:border-gray-700">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Fecha
                 </th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
@@ -265,16 +267,22 @@ const TransactionsView = () => {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-gray-50 dark:divide-gray-700/50">
               {loading && transactions.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="p-8 text-center text-gray-500">
+                  <td
+                    colSpan="5"
+                    className="p-8 text-center text-gray-500 dark:text-gray-400"
+                  >
                     Cargando...
                   </td>
                 </tr>
               ) : filtered.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="p-8 text-center text-gray-500">
+                  <td
+                    colSpan="5"
+                    className="p-8 text-center text-gray-500 dark:text-gray-400"
+                  >
                     No hay transacciones registradas
                   </td>
                 </tr>
@@ -282,20 +290,20 @@ const TransactionsView = () => {
                 filtered.map((tx) => (
                   <tr
                     key={tx.id}
-                    className="hover:bg-emerald-50/30 transition-colors group"
+                    className="hover:bg-emerald-50/30 dark:hover:bg-emerald-900/10 transition-colors group"
                   >
-                    <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                    <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
                       {new Date(tx.date).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                    <td className="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
                       {tx.description}
                     </td>
                     <td className="px-6 py-4 text-sm">
                       <span
                         className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
                           tx.type === "income"
-                            ? "bg-emerald-100 text-emerald-800"
-                            : "bg-red-100 text-red-800"
+                            ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400"
+                            : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400"
                         }`}
                       >
                         {tx.type === "income" ? "Ingreso" : "Gasto"}
@@ -304,8 +312,8 @@ const TransactionsView = () => {
                     <td
                       className={`px-6 py-4 text-sm font-bold text-right ${
                         tx.type === "income"
-                          ? "text-emerald-600"
-                          : "text-gray-700"
+                          ? "text-emerald-600 dark:text-emerald-400"
+                          : "text-gray-700 dark:text-gray-300"
                       }`}
                     >
                       {tx.type === "expense" ? "-" : "+"}€
