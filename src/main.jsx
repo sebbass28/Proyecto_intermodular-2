@@ -8,19 +8,22 @@ import Login from "./pages/auth/Login.jsx";
 import "./index.css";
 import DashboardHome from "./components/dashboard/DashboardHome.jsx";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
+import { ThemeProvider } from "./context/ThemeContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ErrorBoundary>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgotPassword" element={<ForgotPassword />} />
-          <Route path="/reset-password/:token" element={<ResetPassword />} />
-          <Route path="/dashboard" element={<DashboardHome />} />
-        </Routes>
-      </BrowserRouter>
+      <ThemeProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgotPassword" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
+            <Route path="/dashboard" element={<DashboardHome />} />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
     </ErrorBoundary>
   </React.StrictMode>
 );
