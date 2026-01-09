@@ -27,6 +27,8 @@ export const useAuthStore = create((set, get) => ({
 
       set({ user: res.data.user, token: res.data.token, loading: false });
       localStorage.setItem("token", res.data.token);
+      if (res.data.sessionId)
+        localStorage.setItem("current_session_id", res.data.sessionId);
       return { success: true };
     } catch (err) {
       set({
@@ -52,6 +54,8 @@ export const useAuthStore = create((set, get) => ({
         loading: false,
       });
       localStorage.setItem("token", res.data.token);
+      if (res.data.sessionId)
+        localStorage.setItem("current_session_id", res.data.sessionId);
       return { success: true };
     } catch (err) {
       set({
@@ -75,6 +79,7 @@ export const useAuthStore = create((set, get) => ({
     } catch (e) {}
 
     localStorage.removeItem("token");
+    localStorage.removeItem("current_session_id");
     set({ user: null, token: null, tempToken: null, is2FARequired: false });
   },
 
