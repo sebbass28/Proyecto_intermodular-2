@@ -1,0 +1,13 @@
+# Falsos positivos revisados: tokens de ejemplo/truncados en documentación (no son secretos reales)
+7e315a4ed4f863d29c398977e190d5b49515275f:temp_idea/src/VALORES-PARA-GUARDAR.md:generic-api-key:166
+5457ab8cbeda74c7307cb6f5fca6cc364e7487d2:temp_idea/src/VALORES-PARA-GUARDAR.md:generic-api-key:166
+5457ab8cbeda74c7307cb6f5fca6cc364e7487d2:temp_idea/src/EJEMPLO-BACKEND.md:curl-auth-header:543
+7e315a4ed4f863d29c398977e190d5b49515275f:temp_idea/src/GUIA-CONEXION-BACKEND.md:generic-api-key:102
+7e315a4ed4f863d29c398977e190d5b49515275f:temp_idea/src/MODO-DEMO.md:generic-api-key:168
+5457ab8cbeda74c7307cb6f5fca6cc364e7487d2:temp_idea/src/GUIA-CONEXION-BACKEND.md:generic-api-key:102
+5457ab8cbeda74c7307cb6f5fca6cc364e7487d2:temp_idea/src/GUIA-REGISTRO.md:generic-api-key:186
+5457ab8cbeda74c7307cb6f5fca6cc364e7487d2:temp_idea/src/MODO-DEMO.md:generic-api-key:168
+7e315a4ed4f863d29c398977e190d5b49515275f:temp_idea/src/EJEMPLO-BACKEND.md:curl-auth-header:543
+7e315a4ed4f863d29c398977e190d5b49515275f:temp_idea/src/GUIA-REGISTRO.md:generic-api-key:186
+7e315a4ed4f863d29c398977e190d5b49515275f:temp_idea/src/BACKEND-REGISTRO.md:generic-api-key:341
+5457ab8cbeda74c7307cb6f5fca6cc364e7487d2:temp_idea/src/BACKEND-REGISTRO.md:generic-api-key:341

@@ -26,7 +26,7 @@
 
 **Variable a actualizar:**
 ```
-DATABASE_URL=***REMOVED***
+DATABASE_URL=postgresql://<usuario>:<contraseña>@<host>:<puerto>/postgres
 ```
 
 **Pasos:**
@@ -80,10 +80,10 @@ curl -X POST https://backend2-7u6r.onrender.com/api/auth/login \
 
 ### Variables de Entorno en Render (Verificadas)
 ```
-DATABASE_URL=***REMOVED***
-JWT_SECRET=***REMOVED***
+DATABASE_URL=postgresql://<usuario>:<contraseña>@<host>:<puerto>/postgres
+JWT_SECRET=<secreto_aleatorio_1>
 JWT_EXPIRES_IN=7d
-REFRESH_TOKEN_SECRET=***REMOVED***
+REFRESH_TOKEN_SECRET=<secreto_aleatorio_2>
 REFRESH_TOKEN_EXPIRES_IN=30d
 NODE_ENV=development
 PORT=4000
